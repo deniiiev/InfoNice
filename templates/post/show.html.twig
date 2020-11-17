@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block body %}
+
+    <div class="md-post">
+
+        {{ postInfo(post) }}
+        {{ postTitle(post) }}
+        {{ postCategories(post) }}
+        {{ postImage(post) }}
+        {{ postDescription(post) }}
+        {{ postActions(post) }}
+
+    </div>
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscrivez-vous{% endblock %}
+
+{% block body %}
+
+    {{ form_start(registrationForm,{'attr': {'class': 'form-signin md-box'}}) }}
+
+        <header class="block">Регистрация</header>
+
+        {% for flashError in app.flashes('verify_email_error') %}
+            <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+        {% endfor %}
+
+        <div class="login block">
+
+            {{ form_row(registrationForm.username) }}
+            {{ form_row(registrationForm.password.first) }}
+            {{ form_row(registrationForm.password.second) }}
+            {{ form_widget(registrationForm.agreeTerms) }}
+
+            <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+
+        </div>
+
+        <div class="info block">
+
+            Вы уже зарегистрированны?
+
+            <br>
+
+            <a class="btn btn-secondary" href="{{ path('app_login') }}">Вход</a>
+
+        </div>
+
+    {{ form_end(registrationForm) }}
+
+{% endblock %}

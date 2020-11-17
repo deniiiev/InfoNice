@@ -1,0 +1,11 @@
+<script src="{{ asset('/assets/plugins/chosen-js/chosen.jquery.js') }}"></script>
+<script>
+    $('{{ selector }}').chosen(
+        {
+            width: "100%",
+            allow_single_deselect: true,
+            max_selected_options: {{ limit }},
+            no_results_text: 'Aucun résultat pour' },
+        );
+    {# TODO: Добавить текст когда не найдены результаты #}
+</script>

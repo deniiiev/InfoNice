@@ -1,0 +1,21 @@
+@media only screen and (max-width: 992px) {
+  #sideNavOpener {
+    font-size: 24px;
+    position: absolute;
+    width: 62px;
+    height: 62px;
+    top: 0;
+    left: 0;
+    line-height: 62px;
+    text-align: center;
+    display: block !important;
+  }
+  .md-navbar .container {
+    flex: 0;
+  }
+  .navbar-login {
+    display: block !important;
+    position: absolute;
+    right: 10px;
+  }
+}

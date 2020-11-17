@@ -1,0 +1,101 @@
+// Global
+
+*, *:active, *:focus, *:hover {
+  outline: none !important;
+}
+
+a {
+  color: #000;
+  text-decoration: unset !important;
+}
+
+a:hover {
+  color: #0757a8;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Roboto Slab', sans-serif;
+}
+
+body {
+  background-color: #f1f5f8;
+  font-family: 'Roboto', Tahoma, serif;
+}
+
+.md-nav ul, .md-menu ul {
+  padding: unset;
+  margin: unset;
+}
+
+.md-menu li {
+  display: block;
+}
+
+.md-menu li a {
+  text-decoration: unset !important;
+}
+
+// Box
+
+.md-box {
+  box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
+  background-color: #fff;
+  border: unset;
+}
+
+.md-box.sticky-top {
+  top: 69px;
+  border-radius: 2px;
+}
+
+.md-content-padding {
+  padding: 24px;
+}
+
+// Background image
+
+.back-picture {
+  background-position: center;
+  background-size: cover;
+  border-radius: 100%;
+  float: left;
+}
+
+.bp-not-round {
+  border-radius: 3px;
+}
+
+.bp-130 {
+  height: 130px;
+  width: 130px;
+}
+
+.bp-80 {
+  height: 80px;
+  width: 80px;
+}
+
+.bp-50 {
+  height: 50px;
+  width: 50px;
+}
+
+.bp-45 {
+  height: 45px;
+  width: 45px;
+}
+
+.bp-40 {
+  height: 40px;
+  width: 40px;
+}
+
+.bp-35 {
+  height: 35px;
+  width: 35px;
+}
+
+.bp-24 {
+  height: 24px;
+  width: 24px;
+}

@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Добавление поста{% endblock %}
+
+{% block main %}
+
+    <h1>Добавление поста</h1>
+
+    {{ form_start(form) }}
+
+        {{ form_row(form.imageFile) }}
+        {{ form_row(form.title) }}
+        {{ form_row(form.categories) }}
+        {{ form_row(form.description) }}
+
+    <button class="btn btn-primary">
+        Добавить
+    </button>
+
+    {{ form_end(form) }}
+
+    <br>
+
+{% endblock %}
+
+{% block scripts %}
+    {{ chosen() }}
+{% endblock %}

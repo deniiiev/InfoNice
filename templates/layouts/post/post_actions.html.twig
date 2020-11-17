@@ -1,0 +1,27 @@
+<div class="post-actions">
+
+    {% if comments %}
+        <span class="stat">
+            <a href="{{ path('post_show',{'id':post.id}) }}">
+{#                <i class="far fa-comment-alt" style="font-size: 22px;"></i>#}
+{#                <span class="count">12</span>#}
+                Посмотреть комментарии ({{ random(35,542) }})
+            </a>
+        </span>
+    {% endif %}
+
+{#    <span class="stat float-right m-0">#}
+
+{#        {% if app.user %}#}
+{#            <a class="bookmark-toggle" href="#">#}
+{#                <span class="bookmark-icon"></span>#}
+{#            </a>#}
+{#        {% else %}#}
+{#            <a class="bk-toggle" href="{{ path('app_login') }}" style="cursor: pointer;padding-top: 5px;top: -5px;position: relative" data-toggle="tooltip" title="Добавлять посты в закладки можно только после авторизации">#}
+{#                <span class="bookmark-icon"></span>#}
+{#            </a>#}
+{#        {% endif %}#}
+
+{#    </span>#}
+
+</div>

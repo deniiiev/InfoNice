@@ -1,0 +1,122 @@
+<nav class="md-navbar navbar navbar-expand-lg navbar-light bg-white sticky-top">
+
+    <a id="sideNavOpener" class="text-dark" href="javascript:void(0)">
+        <i class="fas fa-bars"></i>
+    </a>
+
+    <div class="container">
+
+        <a class="navbar-brand" href="{{ path('app_home') }}">
+            <img src="{{ asset('/assets/images/logotype.png') }}" width="100" class="d-inline-block align-top" alt="" loading="lazy">
+        </a>
+
+        <div class="collapse navbar-collapse" id="navbarColor03">
+
+            <ul class="navbar-nav mr-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Новости</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Объявлении</a>
+                </li>
+
+            </ul>
+
+            <ul class="navbar-nav">
+
+                {% if app.user %}
+
+                    <li class="nav-item dropdown float-right">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ app.user.username }}</a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="{{ path('user_profile', {'username':app.user.username}) }}">Мой аккаунт</a>
+                            <a class="dropdown-item" href="{{ path('post_add') }}">Добавить объявление</a>
+                            <a class="dropdown-item" href="#">Настройки</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item text-danger" href="{{ path('app_logout') }}">Выйти</a>
+                        </div>
+                    </li>
+
+                {% else %}
+
+                    <a class="btn btn-link text-dark" style="box-shadow: unset" href="{{ path('app_login') }}">
+                        <i class="fas fa-user-circle"></i>
+                        Войти
+                    </a>
+
+                {% endif %}
+
+            </ul>
+
+        </div>
+
+    </div>
+
+    {% if app.user %}
+
+{#        <a style="position: absolute;right: 14px;" href="{{ path('user_profile', {'username':app.user.username}) }}">#}
+{#            <span class="avatar back-picture bp-24" style="background-image: url('{{ asset('assets/images/avtr.jpg') }}')">#}
+{#            </span>#}
+{#        </a>#}
+
+    {% else %}
+
+        <a class="btn btn-link text-dark navbar-login" style="position: absolute;right: 10px" href="{{ path('app_login') }}">
+            <i class="fas fa-user-circle"></i>
+            Войти
+        </a>
+
+    {% endif %}
+
+</nav>
+
+<div id="sideNavCloser">
+    <div id="sideNavBack"></div>
+</div>
+
+<div id="sideNav">
+
+    <div class="sidenav-links">
+
+        {% if app.user %}
+            <div class="m-2">
+                <a style="width: 225px;" class="btn btn-primary btn-block" href="{{ path('post_add') }}">Добавить пост</a>
+            </div>
+        {% endif %}
+
+        <a class="sidenav-link" href="{{ path('post_category', {'slug':'news'}) }}">
+            <span class="dashbar-nav-name">
+                Новости
+            </span>
+        </a>
+
+
+        <a class="sidenav-link" href="{{ path('post_category', {'slug':'announcement'}) }}">
+            <span class="dashbar-nav-name">
+                Объявлении
+            </span>
+        </a>
+
+        <a class="sidenav-link" href="{{ path('post_category', {'slug':'questions'}) }}">
+            <span class="dashbar-nav-name">
+                Вопросы
+            </span>
+        </a>
+
+        {% if app.user %}
+
+            <hr style="margin: 6px">
+
+            <a class="sidenav-link text-danger" href="{{ path('app_logout') }}">
+                <span class="dashbar-nav-name">
+                Выйти
+            </span>
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</div>

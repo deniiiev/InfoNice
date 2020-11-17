@@ -1,0 +1,244 @@
+@import "variables";
+@import "~bootstrap";
+@import "components";
+@import "mobile";
+
+// Dropdown
+
+.dropdown-item {
+  padding: 8px 14px;
+  color: #464646;
+  font-size: 14px;
+}
+
+.dropdown-divider {
+  margin: unset;
+}
+
+.dropdown-menu {
+  padding: unset;
+}
+
+// Body
+
+.md-container {
+  margin-top: 50px;
+}
+
+.container .row {
+  padding-top: 14px;
+}
+
+main {
+  flex: 0 0 80%;
+  padding: 0 14px;
+}
+
+.sidebar-a {
+  padding-left: 14px;
+}
+
+.sidebar-b {
+  padding-right: 14px;
+}
+
+.sidebar-a, .sidebar-b {
+  flex: 0 0 20%;
+  max-width: 20%;
+}
+
+// Login form
+
+.form-signin {
+  max-width: 320px;
+  margin: 0 auto;
+  font-size: 15px;
+}
+
+.form-signin header {
+  padding: 4px 15px 4px;
+  border-bottom: 1px solid #eef1f5;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 500;
+  border-top: 3px solid #d2d6db;
+}
+
+.form-signin .login {
+  margin: 14px 16px;
+}
+
+.form-signin .form-group label {
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.form-signin .info {
+  background-color: #e9edf0;
+  color: #5d666d;
+  padding: 22px 14px;
+  text-align: center;
+}
+
+.form-signin .info a {
+  margin-top: 10px;
+}
+
+// Navbar
+
+.md-navbar {
+  box-shadow: 0 .4rem .4rem 0 rgba(0,0,0,.04);
+  border-top: 3px solid #0757a8;
+}
+
+.navbar-login {
+  box-shadow: unset !important;
+  display: none;
+}
+
+// Side NavBar
+
+#sideNavOpener {
+  display: none;
+}
+
+#sideNavCloser {
+  width: 0;
+  height: 100%;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+}
+
+#sideNav {
+  box-shadow: 3px 0 8px rgba(0,0,0,0.1);
+  transition: 0.3s !important;
+  background-color: #fff;
+  overflow-x: hidden;
+  position: fixed;
+  z-index: 1010;
+  height: 100%;
+  width: 0;
+  left: 0;
+  top: 65px;
+}
+
+#sideNav .sidenav-link {
+  white-space: nowrap;
+  display: block;
+  font-size: 16px;
+  margin-bottom: 4px;
+  padding: 6px 12px;
+  color: #202020;
+  font-weight: 400;
+  text-transform: uppercase;
+  font-family: 'Roboto Slab', sans-serif;
+}
+
+#sideNav .sidenav-links {
+  margin: 12px 0;
+}
+
+#sideNav .sidenav-link:hover {
+  background-color: #eee;
+}
+
+#sideNav .dashbar-nav-icon {
+  width: 36px;
+  display: inline-block;
+  text-align: center;
+}
+
+// Post
+
+.md-post {
+  margin-bottom: 14px;
+  position: relative;
+}
+
+.md-post:last-child {
+  margin: unset;
+  border: unset;
+}
+
+.md-post .content {
+  margin-bottom: unset;
+}
+
+.md-post h3 {
+  margin-bottom: 12px;
+}
+
+.post-categories {
+  margin-bottom: 16px;
+  font-size: 12px;
+}
+
+.post-categories a {
+  border: 1px solid lighten($blue,50%);
+  color: $blue;
+  padding: 6px 8px;
+  border-radius: unset;
+  margin-right: 4px;
+  font-size: 14px;
+  line-height: 15px;
+  font-weight: 400;
+}
+
+.post-categories a:hover {
+  background: #e5f1ff;
+}
+
+.post-info {
+  display: table;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.post-info .avatar {
+  margin-right: 6px;
+}
+
+.post-info .username {
+  font-weight: 600;
+}
+
+.post-info .date {
+  font-size: 12px;
+  color: #95a5a6;
+}
+
+.post-image {
+  margin-bottom: 8px;
+}
+
+.post-actions {
+  margin-bottom: -4px;
+  position: relative;
+  margin-top: 12px;
+  font-weight: 600;
+  display: block;
+  height: 22px;
+  width: 100%;
+}
+
+.post-actions .stat {
+  font-size: 14px;
+  float: left;
+  margin-right: 10px;
+}
+
+.post-actions .count {
+  margin-left: 6px;
+  color: #2c3e50;
+}
+
+.post-actions a {
+  height: 22px;
+  color: #737f8b;
+  display: inline-flex;
+}
+
+.post-actions a:hover {
+  color: #2c3e50;
+}

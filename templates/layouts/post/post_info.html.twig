@@ -1,0 +1,16 @@
+<div class="post-info">
+
+        <span class="avatar back-picture bp-24" style="background-image: url('{{ asset('assets/images/avtr.jpg') }}')">
+        </span>
+
+        <a class="username" href="{{ path('user_profile', {'username':post.author.username}) }}">
+            {{ post.author.username }}
+        </a>
+
+    <span class="date">
+    {{ post.publishedAt ? post.publishedAt | format_datetime('medium', 'none', '', 'UTC') }}
+    в
+    {{ post.publishedAt ? post.publishedAt | date(' H:i') }}
+    </span>
+
+</div>
