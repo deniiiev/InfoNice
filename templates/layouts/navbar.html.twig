@@ -62,9 +62,21 @@
     {% if app.user %}
 
 {#        <a style="position: absolute;right: 14px;" href="{{ path('user_profile', {'username':app.user.username}) }}">#}
-{#            <span class="avatar back-picture bp-24" style="background-image: url('{{ asset('assets/images/avtr.jpg') }}')">#}
+{#            <span class="avatar back-picture bp-35" style="background-image: url('{% if app.user.avatar %}{{ vich_uploader_asset(app.user) }}{% else %}{{ asset('assets/images/avatar.jpg') }}{% endif %}')">#}
 {#            </span>#}
 {#        </a>#}
+
+        <div class="dropdown navbar-logout" style="position: absolute;right: 14px;">
+            <a class="md-nav-avatar nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                <div class="back-picture bp-35" style="background-image: url('{% if app.user.avatar %}{{ vich_uploader_asset(app.user) }}{% else %}{{ asset('assets/images/avatar.jpg') }}{% endif %}')"></div>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" style="margin-top: 18px">
+                <a class="dropdown-item" href="{{ path('user_profile', {'username':app.user.username}) }}">Мой аккаунт</a>
+                <a class="dropdown-item" href="{{ path('user_settings') }}">Настройки</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item text-danger" href="{{ path('app_logout') }}">Выйти</a>
+            </div>
+        </div>
 
     {% else %}
 

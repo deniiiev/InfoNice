@@ -1,14 +1,7 @@
 <div class="post-categories">
     {% for category in post.categories %}
-
         <a href="{{ path('post_category', {'slug':category.slug}) }}" class="badge badge-outline-primary">
-                {{ category.title }}
+            {{ category.title }}
         </a>
-
-{#        <a href="{{ path('post_category', {'slug':category.slug}) }}">#}
-{#            {{ category.title }}#}
-{#        </a>#}
-
-{#        {% if not loop.last %}<span style="color: #bfbfbf">-</span>{% endif %}#}
     {% endfor %}
 </div>

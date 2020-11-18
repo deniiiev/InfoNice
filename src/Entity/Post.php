@@ -84,6 +84,11 @@ class Post
      */
     private $status;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $anonymous;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -257,6 +262,18 @@ class Post
     public function setStatus(?bool $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getAnonymous(): ?bool
+    {
+        return $this->anonymous;
+    }
+
+    public function setAnonymous(bool $anonymous): self
+    {
+        $this->anonymous = $anonymous;
 
         return $this;
     }
