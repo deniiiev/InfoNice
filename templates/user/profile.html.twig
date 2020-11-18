@@ -4,18 +4,40 @@
 
 {% endblock %}
 
-{% block main %}
+{% block body %}
 
-    <h3>{{ user.username }}</h3>
+    <div class="md-box md-content-padding">
 
-    <h4>Мои публикации</h4>
+        <div class="md-profile-block">
+            <div class="back-picture bp-130" style="margin-right: 16px;background-image: url('{% if user.avatar %}{{ vich_uploader_asset(user) }}{% else %}{{ asset('assets/images/avatar.jpg') }}{% endif %}')">
+            </div>
 
-    {% for post in posts %}
+            <h3>{{ user.username }}</h3>
 
-        <div class="md-post">
-            {{ post.title }} {{ postStatus(post.status) }}
+            <div>
+                {{ user.about | raw }}
+            </div>
         </div>
 
-    {% endfor %}
+        <h5>Публикации</h5>
+
+        <table class="table table-hover">
+
+            <tbody>
+
+            {% for post in posts %}
+
+                <tr>
+                    <td>{{ post.title }}</td>
+                    <td style="text-align: center">{{ postStatus(post.status) }}</td>
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
 
 {% endblock %}

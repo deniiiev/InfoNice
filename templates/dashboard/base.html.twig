@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400;500&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/chosen-js/chosen.css') }}">
+        {% block stylesheets %}{% endblock %}
+        {{ encore_entry_link_tags('app') }}
+    </head>
+
+    <body>
+
+        {% include 'dashboard/layouts/navbar.html.twig' %}
+
+        {% block top_adv %}
+        {% endblock %}
+
+        <div class="md-container container">
+
+            <div class="row">
+
+                {% block sidebar_a %}
+                {% endblock %}
+
+                <div class="col-sm">
+                    {% block body %}
+                    {% endblock %}
+                </div>
+
+                {% block sidebar_b %}
+                {% endblock %}
+
+            </div>
+
+        </div>
+
+        {{ encore_entry_script_tags('app') }}
+
+    </body>
+
+    {% block scripts %}{% endblock %}
+
+</html>

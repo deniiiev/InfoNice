@@ -28,12 +28,17 @@
 
                 {% if app.user %}
 
+                    <li class="nav-item mr-3">
+                        <a class="btn btn-primary" href="{{ path('post_add') }}">Добавить пост</a>
+                    </li>
+
                     <li class="nav-item dropdown float-right">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ app.user.username }}</a>
-                        <div class="dropdown-menu dropdown-menu-right">
+                        <a class="md-nav-avatar nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            <div class="back-picture bp-35" style="background-image: url('{% if app.user.avatar %}{{ vich_uploader_asset(app.user) }}{% else %}{{ asset('assets/images/avatar.jpg') }}{% endif %}')"></div>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" style="margin-top: 18px">
                             <a class="dropdown-item" href="{{ path('user_profile', {'username':app.user.username}) }}">Мой аккаунт</a>
-                            <a class="dropdown-item" href="{{ path('post_add') }}">Добавить объявление</a>
-                            <a class="dropdown-item" href="#">Настройки</a>
+                            <a class="dropdown-item" href="{{ path('user_settings') }}">Настройки</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item text-danger" href="{{ path('app_logout') }}">Выйти</a>
                         </div>

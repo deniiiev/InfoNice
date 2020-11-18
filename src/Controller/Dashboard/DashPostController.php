@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/dash/post", name="dash_")
  */
-class PostController extends AbstractController
+class DashPostController extends AbstractController
 {
     /**
      * @Route("/", name="post_index", methods={"GET"})
@@ -23,19 +23,7 @@ class PostController extends AbstractController
     public function index(PostRepository $postRepository): Response
     {
         return $this->render('dashboard/post/index.html.twig', [
-            'posts' => $postRepository->findAll(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="post_show", methods={"GET"})
-     * @param Post $post
-     * @return Response
-     */
-    public function show(Post $post): Response
-    {
-        return $this->render('dashboard/post/show.html.twig', [
-            'post' => $post,
+            'posts' => $postRepository->findBy([],['createdAt' => 'DESC']),
         ]);
     }
 

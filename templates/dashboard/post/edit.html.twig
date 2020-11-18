@@ -1,13 +1,27 @@
-{% extends 'base.html.twig' %}
+{% extends 'dashboard/base.html.twig' %}
 
-{% block title %}Edit Post{% endblock %}
+{% block title %}Редактирование поста{% endblock %}
 
 {% block body %}
-    <h1>Edit Post</h1>
 
-    {{ include('dashboard/post/_form.html.twig', {'button_label': 'Update'}) }}
+    <div class="md-box md-content-padding">
 
-    <a href="{{ path('dash_post_index') }}">back to list</a>
+        <h1>Редактирование поста</h1>
 
-    {{ include('dashboard/post/_delete_form.html.twig') }}
+        {{ form_start(form) }}
+
+            {{ form_widget(form) }}
+            <button class="btn btn-primary">{{ button_label|default('Сохранить') }}</button>
+            <a class="btn btn-link float-right" href="{{ path('dash_post_index') }}">
+                Отмена
+            </a>
+
+        {{ form_end(form) }}
+
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+    {{ chosen() }}
 {% endblock %}

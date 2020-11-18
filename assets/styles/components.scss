@@ -17,6 +17,14 @@ h1, h2, h3, h4, h5, h6 {
   font-family: 'Roboto Slab', sans-serif;
 }
 
+h1, .h1 {
+  margin-bottom: 14px;
+}
+
+.btn-link:hover {
+  background-color: #edf1f4;
+}
+
 body {
   background-color: #f1f5f8;
   font-family: 'Roboto', Tahoma, serif;
@@ -52,6 +60,54 @@ body {
   padding: 24px;
 }
 
+// Dashboard crud header
+
+.dash-crud-header {
+  background-color: #fff;
+  border-radius: 3px;
+  box-shadow: 0 1px 0 0 #d7d8db,0 0 0 1px #e3e4e8;
+  padding: 5px;
+  display: table;
+  width: 100%;
+  margin-bottom: $box-space;
+}
+.dash-crud-header h1 {
+  float: left;
+  margin: unset !important;
+  line-height: 52px !important;
+  padding-left: 14px;
+  font-size: 30px;
+  font-weight: 500;
+}
+.dash-crud-header .btn {
+  margin: 8px !important;
+}
+
+// Dots button
+
+.md-dot-btn {
+  padding: 0 6px;
+  border: unset;
+  height: 20px;
+  position: absolute;
+  line-height: 28px;
+  margin-left: 10px;
+  color: #505050;
+  box-shadow: unset !important;
+}
+
+.md-dot-btn svg {
+  color: #a0a0a0;
+}
+
+.table .md-dot-btn {
+  display: none;
+}
+
+tr:hover .md-dot-btn {
+  display: unset;
+}
+
 // Background image
 
 .back-picture {
@@ -62,7 +118,7 @@ body {
 }
 
 .bp-not-round {
-  border-radius: 3px;
+  border-radius: 2px;
 }
 
 .bp-130 {

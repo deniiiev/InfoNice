@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block body %}
+
+    <div class="md-box md-content-padding">
+
+        {{ form_start(form) }}
+
+            {{ form_widget(form) }}
+
+            <button class="btn btn-primary">
+                Сохранить
+            </button>
+
+            <a class="btn btn-link float-right" href="{{ path('user_profile', {'username':user.username}) }}">
+                Отмена
+            </a>
+
+        {{ form_end(form) }}
+
+
+    </div>
+
+{% endblock %}

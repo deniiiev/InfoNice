@@ -27,10 +27,11 @@ class PostExtension extends AbstractExtension
         ]);
     }
 
-    public function postTitle(Environment $twig, $post)
+    public function postTitle(Environment $twig, $post, $link = true)
     {
         return $twig->render('layouts/post/post_title.html.twig', [
-            'post' => $post
+            'post' => $post,
+            'link' => $link
         ]);
     }
 

@@ -17,6 +17,13 @@ class PostType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('imageFile', VichImageType::class, [
+                'label' => 'Изображение',
+                'required' => false,
+                'download_uri' => false,
+                'image_uri' => false,
+                'allow_delete' => false
+            ])
             ->add('title', TextType::class, [
                 'label' => 'Заголовок'
             ])
@@ -31,13 +38,6 @@ class PostType extends AbstractType
                     'data-placeholder' => 'Выберите раздел',
                     'class' => 'chosen'
                 ]
-            ])
-            ->add('imageFile', VichImageType::class, [
-                'label' => 'Изображение',
-                'required' => false,
-                'download_uri' => false,
-                'image_uri' => false,
-                'allow_delete' => false
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Описание',

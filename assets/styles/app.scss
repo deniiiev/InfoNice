@@ -11,6 +11,11 @@
   font-size: 14px;
 }
 
+.dropdown-item:hover, .dropdown-item:active {
+  color: #16181b;
+  background-color: #f8f9fa;
+}
+
 .dropdown-divider {
   margin: unset;
 }
@@ -45,6 +50,14 @@ main {
 .sidebar-a, .sidebar-b {
   flex: 0 0 20%;
   max-width: 20%;
+}
+
+// Profile
+
+.md-profile-block {
+  width: 100%;
+  display: table;
+  margin-bottom: 20px;
 }
 
 // Login form
@@ -94,6 +107,13 @@ main {
 .navbar-login {
   box-shadow: unset !important;
   display: none;
+}
+
+.md-nav-avatar {
+  height: 35px;
+  padding: unset;
+  line-height: 38px;
+  margin-top: 1px;
 }
 
 // Side NavBar
@@ -241,4 +261,18 @@ main {
 
 .post-actions a:hover {
   color: #2c3e50;
+}
+
+// Tables
+
+.table {
+  margin: unset;
+}
+
+td {
+  vertical-align: middle !important;
+}
+
+.scrollable-table {
+  overflow: auto;
 }

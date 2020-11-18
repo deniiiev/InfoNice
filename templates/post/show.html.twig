@@ -4,14 +4,17 @@
 
 {% block body %}
 
-    <div class="md-post">
+    <div class="md-box md-content-padding">
 
-        {{ postInfo(post) }}
-        {{ postTitle(post) }}
-        {{ postCategories(post) }}
-        {{ postImage(post) }}
-        {{ postDescription(post) }}
-        {{ postActions(post) }}
+        <div class="md-post">
+
+            {{ postInfo(post) }}
+            {{ postTitle(post,false) }}
+            {{ postCategories(post) }}
+            {{ postImage(post) }}
+            {{ postDescription(post) }}
+
+        </div>
 
     </div>
 

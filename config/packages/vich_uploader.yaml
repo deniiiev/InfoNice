@@ -6,3 +6,10 @@ vich_uploader:
             uri_prefix: /assets/images/posts
             upload_destination: '%kernel.project_dir%/public/assets/images/posts'
             namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+        user_avatars:
+            uri_prefix: /assets/images/avatars
+            upload_destination: '%kernel.project_dir%/public/assets/images/avatars'
+            namer:
+                service: Vich\UploaderBundle\Naming\PropertyNamer
+                options: { property: 'username' }

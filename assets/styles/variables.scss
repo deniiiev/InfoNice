@@ -18,6 +18,8 @@ $radius: (
   }
 }
 
+$container-max-widths: (xl: 980px) ;
+
 // Box
 
 $box-background: #fff;
@@ -61,3 +63,5 @@ $light     : $gray-200  !default;
 $dark      : $gray-800  !default;
 
 $yiq-contrasted-threshold:  175 !default;
+
+$table-border-width : 0         !default;

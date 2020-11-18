@@ -1,0 +1,19 @@
+<button type="button" class="btn md-dot-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <i class="fas fa-ellipsis-h"></i>
+</button>
+
+<div class="dropdown-menu">
+
+    <a href="{{ path('dash_' ~ name ~ '_edit', {'id': entity.id}) }}" class="dropdown-item">
+        <i class="fa fa-edit" aria-hidden="true"></i> Изменить
+    </a>
+
+    <form method="post" action="{{ path('dash_' ~ name ~ '_delete', {'id': entity.id}) }}" onsubmit="return confirm('Уверенны что хотите удалить?');">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ entity.id) }}">
+        <button class="dropdown-item">
+            <i class="fas fa-trash-alt"></i> Удалить
+        </button>
+    </form>
+
+</div>

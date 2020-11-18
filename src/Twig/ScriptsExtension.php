@@ -2,6 +2,7 @@
 
 namespace App\Twig;
 
+use App\Entity\User;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -12,7 +13,8 @@ class ScriptsExtension extends AbstractExtension
     {
         return [
             new TwigFunction('chosen', [$this, 'chosen'], ['is_safe' => ['html'], 'needs_environment' => true]),
-            new TwigFunction('postStatus', [$this, 'postStatus'], ['is_safe' => ['html'], 'needs_environment' => true])
+            new TwigFunction('postStatus', [$this, 'postStatus'], ['is_safe' => ['html'], 'needs_environment' => true]),
+            new TwigFunction('crudActions', [$this, 'crudActions'], ['is_safe' => ['html'], 'needs_environment' => true])
         ];
     }
 
@@ -41,5 +43,16 @@ class ScriptsExtension extends AbstractExtension
             $info['color'],
             $info['message']
         );
+    }
+
+    public function crudActions(Environment $twig, $entity, $name)
+    {
+        ($entity instanceof User) ? $instance = true : $instance = false;
+
+        return $twig->render('dashboard/layouts/actions.html.twig', [
+            'entity' => $entity,
+            'name' => $name,
+            'user' => $instance
+        ]);
     }
 }
