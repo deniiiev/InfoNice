@@ -49,10 +49,11 @@ class PostExtension extends AbstractExtension
         ]);
     }
 
-    public function postDescription(Environment $twig, $post)
+    public function postDescription(Environment $twig, $post, $text = null)
     {
         return $twig->render('layouts/post/post_description.html.twig', [
-            'post' => $post
+            'post' => $post,
+            'text' => $text
         ]);
     }
 

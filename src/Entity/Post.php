@@ -89,6 +89,21 @@ class Post
      */
     private $anonymous;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $section;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $views;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $featured;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -274,6 +289,42 @@ class Post
     public function setAnonymous(bool $anonymous): self
     {
         $this->anonymous = $anonymous;
+
+        return $this;
+    }
+
+    public function getSection(): ?string
+    {
+        return $this->section;
+    }
+
+    public function setSection(string $section): self
+    {
+        $this->section = $section;
+
+        return $this;
+    }
+
+    public function getViews(): ?int
+    {
+        return $this->views;
+    }
+
+    public function setViews(?int $views): self
+    {
+        $this->views = $views;
+
+        return $this;
+    }
+
+    public function getFeatured(): ?bool
+    {
+        return $this->featured;
+    }
+
+    public function setFeatured(bool $featured): self
+    {
+        $this->featured = $featured;
 
         return $this;
     }

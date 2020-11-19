@@ -40,16 +40,11 @@ main {
 }
 
 .sidebar-a {
-  padding-left: 14px;
+  padding-right: unset;
 }
 
 .sidebar-b {
-  padding-right: 14px;
-}
-
-.sidebar-a, .sidebar-b {
-  flex: 0 0 20%;
-  max-width: 20%;
+  padding-left: unset;
 }
 
 // Profile
@@ -174,6 +169,8 @@ main {
 .md-post {
   margin-bottom: 14px;
   position: relative;
+  display: table;
+  width: 100%;
 }
 
 .md-post:last-child {
@@ -261,6 +258,18 @@ main {
 
 .post-actions a:hover {
   color: #2c3e50;
+}
+
+// Post Ad
+
+.md-post-ad .post-image {
+  width: 180px;
+  height: 180px;
+  margin: unset;
+}
+
+.md-post-ad .post-title {
+  margin-top: 12px;
 }
 
 // Tables

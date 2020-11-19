@@ -1,0 +1,15 @@
+{% extends 'dashboard/base.html.twig' %}
+
+{% block title %}Изменение категории{% endblock %}
+
+{% block body %}
+
+    <div class="md-box md-content-padding">
+
+        <h1>Изменение категории</h1>
+
+        {{ include('dashboard/category/_form.html.twig', {'button_label': 'Обновить'}) }}
+
+    </div>
+
+{% endblock %}

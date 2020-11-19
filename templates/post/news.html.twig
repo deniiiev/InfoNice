@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+    {% for post in posts %}
+
+        <div class="md-post md-box md-content-padding md-post-news">
+
+            {{ postInfo(post) }}
+            {{ postTitle(post) }}
+            {{ postCategories(post) }}
+            {{ postImage(post) }}
+            {{ postDescription(post,180) }}
+            {{ postActions(post) }}
+
+        </div>
+
+    {% endfor %}
+
+{% endblock %}

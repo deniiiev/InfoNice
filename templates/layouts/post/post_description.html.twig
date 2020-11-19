@@ -1,5 +1,9 @@
 {% if post.description %}
     <p class="content">
-        {{ post.description | raw }}..
+        {% if text is null %}
+            {{ post.description | raw }}
+        {% else %}
+            {{ post.description | raw | slice(0, text) }}..
+        {% endif %}
     </p>
 {% endif %}

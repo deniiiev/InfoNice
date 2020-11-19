@@ -1,0 +1,49 @@
+{% extends 'dashboard/base.html.twig' %}
+
+{% block title %}Категории{% endblock %}
+
+{% block body %}
+
+    <div class="container dash-crud-header">
+
+        <h1>Категории</h1>
+
+        <a class="btn btn-primary float-right" href="{{ path('dash_category_new') }}">Добавить категорию</a>
+
+    </div>
+
+    <div class="md-box md-content-padding">
+
+        <div class="scrollable-table">
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Заголовок</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for category in categories %}
+                <tr>
+                    <td>{{ category.id }}</td>
+                    <td>
+                        {{ category.title }}
+                        <br>
+                        <small class="text-muted">{{ category.slug }}</small>
+                        {{ crudActions(category,'category') }}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">Категорий не существует</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        </div>
+
+    </div>
+
+{% endblock %}

@@ -18,6 +18,10 @@
                     <a class="nav-link" href="{{ path('dash_post_index') }}">Посты</a>
                 </li>
 
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('dash_category_index') }}">Категории</a>
+                </li>
+
             </ul>
 
             <ul class="navbar-nav">
@@ -44,7 +48,7 @@
 
         {% if app.user %}
             <div class="m-2">
-                <a style="width: 225px;" class="btn btn-primary btn-block" href="{{ path('post_add') }}">Добавить пост</a>
+                <a style="width: 225px;" class="btn btn-primary btn-block" href="{{ path('post_add', {'type':'ad'}) }}">Добавить пост</a>
             </div>
         {% endif %}
 

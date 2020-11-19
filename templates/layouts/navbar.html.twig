@@ -15,11 +15,15 @@
             <ul class="navbar-nav mr-auto">
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Новости</a>
+                    <a class="nav-link" href="{{ path('post_news') }}">Новости</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Объявлении</a>
+                    <a class="nav-link" href="{{ path('post_ads') }}">Объявлении</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('post_questions') }}">Вопросы</a>
                 </li>
 
             </ul>
@@ -28,21 +32,30 @@
 
                 {% if app.user %}
 
-                    <li class="nav-item mr-3">
-                        <a class="btn btn-primary" href="{{ path('post_add') }}">Добавить пост</a>
-                    </li>
-
-                    <li class="nav-item dropdown float-right">
-                        <a class="md-nav-avatar nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                            <div class="back-picture bp-35" style="background-image: url('{% if app.user.avatar %}{{ vich_uploader_asset(app.user) }}{% else %}{{ asset('assets/images/avatar.jpg') }}{% endif %}')"></div>
+                    <div class="nav-item dropdown mr-2">
+                        <a class="btn btn-primary" data-toggle="dropdown" aria-haspopup="true">
+                            <i class="fas fa-plus" style="position: relative; margin-right: 3px; top: 1px;"></i>
+                            Добавить
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" style="margin-top: 18px">
-                            <a class="dropdown-item" href="{{ path('user_profile', {'username':app.user.username}) }}">Мой аккаунт</a>
-                            <a class="dropdown-item" href="{{ path('user_settings') }}">Настройки</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-danger" href="{{ path('app_logout') }}">Выйти</a>
+                            <a class="dropdown-item" href="{{ path('post_add', {'type':'news'}) }}">Новость</a>
+                            <a class="dropdown-item" href="{{ path('post_add', {'type':'ad'}) }}">Объявление</a>
+                            <a class="dropdown-item" href="{{ path('post_add', {'type':'question'}) }}">Вопрос</a>
                         </div>
-                    </li>
+                    </div>
+
+{#                    <li class="nav-item dropdown float-right">#}
+{#                        <a class="md-nav-avatar nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">#}
+{#                            <div class="back-picture bp-35" style="background-image: url('{% if app.user.avatar %}{{ vich_uploader_asset(app.user) }}{% else %}{{ asset('assets/images/avatar.jpg') }}{% endif %}')"></div>#}
+{#                        </a>#}
+{#                        <div class="dropdown-menu dropdown-menu-right" style="margin-top: 18px">#}
+{#                            <a class="dropdown-item" href="{{ path('user_profile', {'username':app.user.username}) }}">Мой аккаунт</a>#}
+{#                            <a class="dropdown-item" href="{{ path('dash_home_index') }}">Менеджер</a>#}
+{#                            <a class="dropdown-item" href="{{ path('user_settings') }}">Настройки</a>#}
+{#                            <div class="dropdown-divider"></div>#}
+{#                            <a class="dropdown-item text-danger" href="{{ path('app_logout') }}">Выйти</a>#}
+{#                        </div>#}
+{#                    </li>#}
 
                 {% else %}
 
@@ -99,7 +112,7 @@
 
         {% if app.user %}
             <div class="m-2">
-                <a style="width: 225px;" class="btn btn-primary btn-block" href="{{ path('post_add') }}">Добавить пост</a>
+                <a style="width: 225px;" class="btn btn-primary btn-block" href="{{ path('post_add', {'type':'ad'}) }}">Добавить пост</a>
             </div>
         {% endif %}
 
