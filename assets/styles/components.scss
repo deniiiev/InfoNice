@@ -43,6 +43,10 @@ body {
   text-decoration: unset !important;
 }
 
+.col-sm {
+  padding: 0 14px;
+}
+
 // Box
 
 .md-box {
@@ -52,8 +56,7 @@ body {
 }
 
 .md-box.sticky-top {
-  top: 69px;
-  border-radius: 2px;
+  top: 79px;
 }
 
 .md-content-padding {

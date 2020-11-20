@@ -26,7 +26,7 @@ class HomeController extends AbstractController
     public function home(PostRepository $postRepository, CategoryRepository $categoryRepo): Response
     {
         $categories = $categoryRepo->findAll();
-        $posts = $postRepository->findBy([],['publishedAt' => 'DESC']);
+        $posts = $postRepository->findBy(['published' => true],['publishedAt' => 'DESC']);
         return $this->render('home/index.html.twig', [
             'posts' => $posts,
             'categories' => $categories

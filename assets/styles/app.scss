@@ -26,10 +26,6 @@
 
 // Body
 
-.md-container {
-  margin-top: 50px;
-}
-
 .container .row {
   padding-top: 14px;
 }
@@ -97,6 +93,7 @@ main {
 .md-navbar {
   box-shadow: 0 .4rem .4rem 0 rgba(0,0,0,.04);
   border-top: 3px solid #0757a8;
+  z-index: 1200;
 }
 
 .navbar-login, .navbar-logout {
@@ -121,17 +118,18 @@ main {
   width: 0;
   height: 100%;
   position: fixed;
-  z-index: 1000;
+  z-index: 1300;
   top: 0;
 }
 
 #sideNav {
-  box-shadow: 3px 0 8px rgba(0,0,0,0.1);
+  //box-shadow: 3px 0 8px rgba(0,0,0,0.1);
+  box-shadow: 3px 8px 8px rgba(0, 0, 0, 0.1), inset 0 10px 8px -8px rgba(0,0,0,0.1);
   transition: 0.3s !important;
   background-color: #fff;
   overflow-x: hidden;
   position: fixed;
-  z-index: 1010;
+  z-index: 1400;
   height: 100%;
   width: 0;
   left: 0;
@@ -146,8 +144,6 @@ main {
   padding: 6px 12px;
   color: #202020;
   font-weight: 400;
-  text-transform: uppercase;
-  font-family: 'Roboto Slab', sans-serif;
 }
 
 #sideNav .sidenav-links {
@@ -230,7 +226,6 @@ main {
 }
 
 .post-actions {
-  margin-bottom: -4px;
   position: relative;
   margin-top: 12px;
   font-weight: 600;
@@ -261,6 +256,10 @@ main {
 }
 
 // Post Ad
+
+.md-post-ad {
+  padding-right: 12px;
+}
 
 .md-post-ad .post-image {
   width: 180px;

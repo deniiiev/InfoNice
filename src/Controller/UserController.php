@@ -22,7 +22,12 @@ class UserController extends AbstractController
      */
     public function profile(User $user, PostRepository $postRepo): Response
     {
-        $posts = $postRepo->findBy(['author'=>$user],['createdAt' => 'DESC']);
+        if ($user == $this->getUser() || $this->isGranted('ROLE_ADMIN')) {
+            $posts = $postRepo->findBy(['author'=>$user],['createdAt' => 'DESC']);
+        } else {
+            $posts = $postRepo->findBy(['author'=>$user, 'published' => true],['createdAt' => 'DESC']);
+        }
+
         return $this->render('user/profile.html.twig', [
             'user' => $user,
             'posts' => $posts

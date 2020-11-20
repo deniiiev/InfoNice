@@ -29,14 +29,14 @@ class NewsType extends AbstractType
                 'label' => 'Заголовок'
             ])
             ->add('categories', EntityType::class, [
-                'label' => 'Раздел',
+                'label' => 'Категория',
                 'class' => Category::class,
                 'required' => false,
                 'multiple' => true,
                 'choice_label' => 'title',
                 'label_attr' => ['class' => 'checkbox-custom'],
                 'attr' => [
-                    'data-placeholder' => 'Выберите раздел',
+                    'data-placeholder' => 'Выберите категории',
                     'class' => 'chosen'
                 ]
             ])

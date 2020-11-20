@@ -29,7 +29,7 @@ class AdType extends AbstractType
                 'label' => 'Заголовок'
             ])
             ->add('categories', EntityType::class, [
-                'label' => 'Категории',
+                'label' => 'Категория',
                 'class' => Category::class,
                 'required' => false,
                 'multiple' => true,
@@ -43,11 +43,6 @@ class AdType extends AbstractType
             ->add('description', TextareaType::class, [
                 'label' => 'Описание',
                 'required' => false
-            ])
-            ->add('anonymous', CheckboxType::class, [
-                'label' => 'Анонимный пост',
-                'required' => false,
-                'label_attr' => ['class' => 'switch-custom']
             ])
         ;
     }

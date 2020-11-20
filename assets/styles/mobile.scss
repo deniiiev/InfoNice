@@ -18,4 +18,26 @@
     position: absolute;
     right: 10px;
   }
+  .sidebar-b {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .md-post {
+    margin-bottom: 12px !important;
+  }
+  .md-post h4 {
+    font-size: 18px;
+    line-height: 24px;
+  }
+  .post-actions {
+    margin-top: 8px !important;
+  }
+  .md-content-padding {
+    padding: 12px;
+  }
+  .col-sm {
+    padding: 0 12px;
+  }
 }

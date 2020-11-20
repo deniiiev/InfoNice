@@ -8,7 +8,6 @@ use App\Entity\User;
 use App\Form\Post\AdType;
 use App\Form\Post\NewsType;
 use App\Form\Post\QuestionType;
-use App\Form\PostType;
 use App\Repository\PostRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +23,7 @@ class PostController extends AbstractController
      */
     public function news(PostRepository $postRepo)
     {
-        $posts = $postRepo->findBy(['section'=>'news'], ['publishedAt' => 'DESC']);
+        $posts = $postRepo->findBy(['section'=>'news','published' => true], ['publishedAt' => 'DESC']);
 
         return $this->render('post/news.html.twig', [
             'posts' => $posts
@@ -38,7 +37,7 @@ class PostController extends AbstractController
      */
     public function ads(PostRepository $postRepo)
     {
-        $posts = $postRepo->findBy(['section'=>'ad'], ['publishedAt' => 'DESC']);
+        $posts = $postRepo->findBy(['section'=>'ad', 'published' => true], ['publishedAt' => 'DESC']);
 
         return $this->render('post/ads.html.twig', [
             'posts' => $posts
@@ -52,7 +51,7 @@ class PostController extends AbstractController
      */
     public function questions(PostRepository $postRepo)
     {
-        $posts = $postRepo->findBy(['section'=>'question'], ['publishedAt' => 'DESC']);
+        $posts = $postRepo->findBy(['section'=>'question', 'published' => true], ['publishedAt' => 'DESC']);
 
         return $this->render('post/questions.html.twig', [
             'posts' => $posts
@@ -66,9 +65,9 @@ class PostController extends AbstractController
      */
     public function show(Post $post): Response
     {
-//        if ($post->getStatus() != true) {
-//            throw $this->createNotFoundException();
-//        }
+        if ($post->getPublished() != true && $this->getUser() != $post->getAuthor() && !$this->isGranted('ROLE_ADMIN')) {
+            throw $this->createNotFoundException();
+        }
 
         $post->setViews($post->getViews()+1);
         $em = $this->getDoctrine()->getManager();

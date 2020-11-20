@@ -37,7 +37,7 @@
                                 <a href="{{ path('post_show', {'id':post.id}) }}" target="_blank">{{ post.title }}</a>
                                 {{ crudActions(post, 'post') }}
                             </td>
-                            <td>{{ postStatus(post.status) }}</td>
+                            <td>{{ postStatus(post.published) }}</td>
                             <td>{{ post.createdAt ? post.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                         </tr>
                     {% else %}

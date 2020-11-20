@@ -80,11 +80,6 @@ class Post
     private $author;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $status;
-
-    /**
      * @ORM\Column(type="boolean")
      */
     private $anonymous;
@@ -100,9 +95,14 @@ class Post
     private $views;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $featured;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $published;
 
     public function __construct()
     {
@@ -119,6 +119,7 @@ class Post
      */
     public function initializePrePersist()
     {
+        $this->views = 0;
         $this->createdAt = new DateTime('now');
     }
 
@@ -269,18 +270,6 @@ class Post
         return $this;
     }
 
-    public function getStatus(): ?bool
-    {
-        return $this->status;
-    }
-
-    public function setStatus(?bool $status): self
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
     public function getAnonymous(): ?bool
     {
         return $this->anonymous;
@@ -325,6 +314,18 @@ class Post
     public function setFeatured(bool $featured): self
     {
         $this->featured = $featured;
+
+        return $this;
+    }
+
+    public function getPublished(): ?bool
+    {
+        return $this->published;
+    }
+
+    public function setPublished(bool $published): self
+    {
+        $this->published = $published;
 
         return $this;
     }
