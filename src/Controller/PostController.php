@@ -108,7 +108,6 @@ class PostController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $post->setAuthor($this->getDoctrine()->getRepository(User::class)->findOneBy(['username'=>$this->getUser()->getUsername()]));
-
             $post->setSection($type);
 
             $em = $this->getDoctrine()->getManager();
@@ -121,6 +120,7 @@ class PostController extends AbstractController
         return $this->render('post/add.html.twig', [
             'post' => $post,
             'form' => $form->createView(),
+            'type' => $type
         ]);
     }
 }

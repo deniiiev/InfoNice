@@ -80,7 +80,7 @@ class Post
     private $author;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $anonymous;
 
@@ -103,6 +103,16 @@ class Post
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $published;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $price;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $priceType;
 
     public function __construct()
     {
@@ -326,6 +336,30 @@ class Post
     public function setPublished(bool $published): self
     {
         $this->published = $published;
+
+        return $this;
+    }
+
+    public function getPrice(): ?int
+    {
+        return $this->price;
+    }
+
+    public function setPrice(?int $price): self
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    public function getPriceType(): ?string
+    {
+        return $this->priceType;
+    }
+
+    public function setPriceType(?string $priceType): self
+    {
+        $this->priceType = $priceType;
 
         return $this;
     }

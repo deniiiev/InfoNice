@@ -24,6 +24,9 @@
 }
 
 @media only screen and (max-width: 768px) {
+  h1, .h1 {
+    font-size: 24px;
+  }
   .md-post {
     margin-bottom: 12px !important;
   }
@@ -35,7 +38,7 @@
     margin-top: 8px !important;
   }
   .md-content-padding {
-    padding: 12px;
+    padding: 14px 16px;
   }
   .col-sm {
     padding: 0 12px;

@@ -4,6 +4,7 @@ namespace App\Form\Post;
 
 use App\Entity\Category;
 use App\Entity\Post;
+use App\Repository\CategoryRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -15,6 +16,13 @@ use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class QuestionType extends AbstractType
 {
+    private $categories;
+
+    public function __construct(CategoryRepository $categories)
+    {
+        $this->categories = $categories;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -29,11 +37,12 @@ class QuestionType extends AbstractType
                 'label' => 'Заголовок'
             ])
             ->add('categories', EntityType::class, [
-                'label' => 'Категория',
+                'label' => 'Категории',
                 'class' => Category::class,
                 'required' => false,
                 'multiple' => true,
                 'choice_label' => 'title',
+                'choices' => $this->categories->findBy(['question' => true]),
                 'label_attr' => ['class' => 'checkbox-custom'],
                 'attr' => [
                     'data-placeholder' => 'Выберите категории',
@@ -42,10 +51,13 @@ class QuestionType extends AbstractType
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Описание',
-                'required' => false
+                'required' => false,
+                'attr' => [
+                    'class' => 'ckeditor'
+                ]
             ])
             ->add('anonymous', CheckboxType::class, [
-                'label' => 'Анонимный пост',
+                'label' => 'Анонимный вопрос',
                 'required' => false,
                 'label_attr' => ['class' => 'switch-custom']
             ])

@@ -1,18 +1,35 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    Добавление объявлении
+    {{ (type ~ '.adding') | trans({},'posts') }}
 {% endblock %}
 
 {% block body %}
 
     <div class="md-box md-content-padding">
 
-        <h1>Добавление объявлении</h1>
+        <h1>{{ (type ~ '.adding') | trans({},'posts') }}</h1>
 
         {{ form_start(form) }}
 
-        {{ form_widget(form) }}
+        {% if type == 'ad' %}
+
+            {{ form_row(form.imageFile) }}
+            {{ form_row(form.title) }}
+            {{ form_row(form.categories) }}
+            {{ form_row(form.description) }}
+            {{ form_label(form.price) }}
+
+            <div class="row pt-0 pb-3">
+                <div class="col pr-2">{{ form_widget(form.price) }}</div>
+                <div class="col pl-2">{{ form_widget(form.priceType) }}</div>
+            </div>
+
+        {% else %}
+
+            {{ form_widget(form) }}
+
+        {% endif %}
 
         <button class="btn btn-primary">
             Добавить
@@ -26,4 +43,5 @@
 
 {% block scripts %}
     {{ chosen() }}
+    {{ ckeditor() }}
 {% endblock %}

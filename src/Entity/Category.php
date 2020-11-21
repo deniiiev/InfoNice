@@ -36,6 +36,21 @@ class Category
      */
     private $posts;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $news;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $ad;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $question;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -103,6 +118,42 @@ class Category
         if ($this->posts->removeElement($post)) {
             $post->removeCategory($this);
         }
+
+        return $this;
+    }
+
+    public function getNews(): ?bool
+    {
+        return $this->news;
+    }
+
+    public function setNews(?bool $news): self
+    {
+        $this->news = $news;
+
+        return $this;
+    }
+
+    public function getAd(): ?bool
+    {
+        return $this->ad;
+    }
+
+    public function setAd(?bool $ad): self
+    {
+        $this->ad = $ad;
+
+        return $this;
+    }
+
+    public function getQuestion(): ?bool
+    {
+        return $this->question;
+    }
+
+    public function setQuestion(?bool $question): self
+    {
+        $this->question = $question;
 
         return $this;
     }

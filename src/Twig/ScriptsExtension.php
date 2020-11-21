@@ -13,6 +13,7 @@ class ScriptsExtension extends AbstractExtension
     {
         return [
             new TwigFunction('chosen', [$this, 'chosen'], ['is_safe' => ['html'], 'needs_environment' => true]),
+            new TwigFunction('ckeditor', [$this, 'ckeditor'], ['is_safe' => ['html'], 'needs_environment' => true]),
             new TwigFunction('postStatus', [$this, 'postStatus'], ['is_safe' => ['html'], 'needs_environment' => true]),
             new TwigFunction('crudActions', [$this, 'crudActions'], ['is_safe' => ['html'], 'needs_environment' => true])
         ];
@@ -24,6 +25,11 @@ class ScriptsExtension extends AbstractExtension
             'limit' => $limit,
             'selector' => $selector
         ]);
+    }
+
+    public function ckeditor(Environment $twig)
+    {
+        return $twig->render('layouts/plugins/ckeditor.html.twig');
     }
 
     public function postStatus(Environment $twig, $status)

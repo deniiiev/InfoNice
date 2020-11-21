@@ -4,9 +4,12 @@ namespace App\Form\Post;
 
 use App\Entity\Category;
 use App\Entity\Post;
+use App\Repository\CategoryRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -15,6 +18,13 @@ use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class AdType extends AbstractType
 {
+    private $categories;
+
+    public function __construct(CategoryRepository $categories)
+    {
+        $this->categories = $categories;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -29,11 +39,12 @@ class AdType extends AbstractType
                 'label' => 'Заголовок'
             ])
             ->add('categories', EntityType::class, [
-                'label' => 'Категория',
+                'label' => 'Категории',
                 'class' => Category::class,
                 'required' => false,
                 'multiple' => true,
                 'choice_label' => 'title',
+                'choices' => $this->categories->findBy(['ad' => true]),
                 'label_attr' => ['class' => 'checkbox-custom'],
                 'attr' => [
                     'data-placeholder' => 'Выберите категории',
@@ -42,7 +53,26 @@ class AdType extends AbstractType
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Описание',
+                'required' => false,
+                'attr' => [
+                    'class' => 'ckeditor'
+                ]
+            ])
+            ->add('price', MoneyType::class, [
+                'label' => 'Цена',
                 'required' => false
+            ])
+            ->add('priceType', ChoiceType::class, [
+                'choices' => [
+                    '-' => null,
+                    'В час' => 'hour',
+                    'В день' => 'day',
+                    'В неделю' => 'week',
+                    'В месяц' => 'month',
+                    'За шт.' => 'piece',
+                    'За кг.' => 'kilogram',
+                    'За л.' => 'liter',
+                ]
             ])
         ;
     }
