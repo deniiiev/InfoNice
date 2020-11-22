@@ -132,23 +132,25 @@
 
 {#        {% endif %}#}
 
-        {% if app.user %}
-
             <table class="table table-hover">
                 <tbody>
+
+                {% if app.user %}
 
                 <tr style="border-bottom: 1px solid rgba(0,0,0,0.1)">
                     <td style="width: 0;">
                         <div class="back-picture bp-35" style="background-image: url('{% if app.user.avatar %}{{ vich_uploader_asset(app.user) }}{% else %}{{ asset('assets/images/avatar.jpg') }}{% endif %}')"></div>
                     </td>
                     <td style="padding-left: 0">
-                        <a href="{{ path('user_profile', {'username':app.user.username}) }}">Мой профиль</a>
+                        <a style="white-space: nowrap" href="{{ path('user_profile', {'username':app.user.username}) }}">Мой профиль</a>
                     </td>
                 </tr>
 
+                {% endif %}
+
                 <tr>
                     <td style="width: 0; text-align: center;">
-                        <i class="fas fa-toolbox"></i>
+                        <i class="fas fa-newspaper"></i>
                     </td>
                     <td style="padding-left: 0">
                         <a href="{{ path('dash_home_index') }}">Новости</a>
@@ -157,7 +159,7 @@
 
                 <tr>
                     <td style="width: 0; text-align: center;">
-                        <i class="fas fa-user-cog"></i>
+                        <i class="fas fa-clipboard"></i>
                     </td>
                     <td style="padding-left: 0">
                         <a href="{{ path('user_settings') }}">Объявлении</a>
@@ -166,12 +168,14 @@
 
                 <tr style="border-bottom: 1px solid rgba(0,0,0,0.1)">
                     <td style="width: 0; text-align: center;">
-                        <i class="fas fa-door-open"></i>
+                        <i class="fas fa-comments"></i>
                     </td>
                     <td style="padding-left: 0">
                         <a href="{{ path('app_logout') }}">Вопросы</a>
                     </td>
                 </tr>
+
+                {% if app.user %}
 
                 <tr>
                     <td style="width: 0; text-align: center;">
@@ -200,10 +204,10 @@
                     </td>
                 </tr>
 
+                {% endif %}
+
                 </tbody>
             </table>
-
-        {% endif %}
 
 {#        <a class="sidenav-link" href="{{ path('post_category', {'slug':'news'}) }}">#}
 {#            <span class="dashbar-nav-name">#}
