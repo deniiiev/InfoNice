@@ -21,7 +21,6 @@ require('@fortawesome/fontawesome-free/js/all.js');
 require('bootstrap');
 
 // Prevent scroll
-
 let keys = {37: 1, 38: 1, 39: 1, 40: 1};
 
 function preventDefault(e) {
@@ -61,7 +60,6 @@ function enableScroll() {
 
 
 // Mobile navbar
-
 const sideNav = document.getElementById('sideNav');
 const sideNavOpener = document.getElementById('sideNavOpener');
 const sideNavCloser = document.getElementById('sideNavCloser');
@@ -85,3 +83,23 @@ if (sideNav) {
     sideNavOpener.addEventListener('click', openNav);
     sideNavCloser.addEventListener('click', closeNav);
 }
+
+// Add post to featured
+
+const axios = require('axios').default;
+
+let featured = document.querySelectorAll('.featured-toggle');
+
+function switcher(event) {
+    event.preventDefault();
+    let url = this.href;
+
+    axios.get(url).then((response) => {
+        let status = String(response.data.response.status);
+        (status === 'added') ? this.classList.add('added') : this.classList.remove('added');
+    });
+}
+
+featured.forEach((featured) => {
+    featured.addEventListener('click', switcher);
+});

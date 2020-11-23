@@ -3,13 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Entity\Comment;
 use App\Entity\Post;
 use App\Entity\User;
+use App\Form\CommentType;
 use App\Form\Post\AdType;
 use App\Form\Post\NewsType;
 use App\Form\Post\QuestionType;
 use App\Repository\PostRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -61,21 +65,35 @@ class PostController extends AbstractController
     /**
      * @Route("/post/{id}", name="post_show")
      * @param Post $post
+     * @param Request $request
+     * @param UserRepository $repo
      * @return Response
      */
-    public function show(Post $post): Response
+    public function show(Post $post, Request $request, UserRepository $repo): Response
     {
         if ($post->getPublished() != true && $this->getUser() != $post->getAuthor() && !$this->isGranted('ROLE_ADMIN')) {
             throw $this->createNotFoundException();
         }
 
-        $post->setViews($post->getViews()+1);
         $em = $this->getDoctrine()->getManager();
+        $form = $this->createForm(CommentType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment = new Comment();
+            $comment->setAuthor($repo->findOneBy(['username' => $this->getUser()->getUsername()]));
+            $comment->setMessage($form->get('message')->getData());
+            $comment->setPost($post);
+            $em->persist($comment);
+        }
+
+        $post->setViews($post->getViews()+1);
         $em->persist($post);
         $em->flush();
 
         return $this->render('post/show.html.twig', [
-            'post' => $post
+            'post' => $post,
+            'form' => $form->createView()
         ]);
     }
 
@@ -121,6 +139,29 @@ class PostController extends AbstractController
             'post' => $post,
             'form' => $form->createView(),
             'type' => $type
+        ]);
+    }
+
+    /**
+     * @Route("/featured/{id}", name="post_featured", methods={"POST", "GET"})
+     * @param Post $post
+     * @return JsonResponse
+     */
+    public function featured(Post $post): Response
+    {
+        if ($post->getFeatured()){
+            $response = ['status' => 'removed'];
+            $post->setFeatured(false);
+        } else {
+            $response = ['status' => 'added'];
+            $post->setFeatured(true);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+
+        return $this->json([
+            'response' => $response
         ]);
     }
 }

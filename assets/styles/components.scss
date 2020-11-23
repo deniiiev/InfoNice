@@ -158,3 +158,12 @@ tr:hover .md-dot-btn {
   height: 24px;
   width: 24px;
 }
+
+// Ajax featured toggle
+
+.featured-toggle, .featured-toggle:hover {
+  color: #bbb;
+}
+.featured-toggle.added {
+  color: orange;
+}

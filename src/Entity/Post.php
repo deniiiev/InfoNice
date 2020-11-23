@@ -114,9 +114,15 @@ class Post
      */
     private $priceType;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="post")
+     */
+    private $comments;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -130,6 +136,8 @@ class Post
     public function initializePrePersist()
     {
         $this->views = 0;
+        $this->published = false;
+        $this->featured = false;
         $this->createdAt = new DateTime('now');
     }
 
@@ -360,6 +368,36 @@ class Post
     public function setPriceType(?string $priceType): self
     {
         $this->priceType = $priceType;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getPost() === $this) {
+                $comment->setPost(null);
+            }
+        }
 
         return $this;
     }

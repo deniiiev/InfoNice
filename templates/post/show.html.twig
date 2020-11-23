@@ -16,6 +16,45 @@
 
         </div>
 
+        <a class="featured-toggle{% if post.featured %} added{% endif %}" href="{{ path('post_featured', {'id':post.id}) }}">
+            <i class="fas fa-star"></i>
+        </a>
+
     </div>
+
+    {# TODO: Make form #}
+
+    {{ form_start(form) }}
+
+    <div class="md-comment-write">
+
+        <div class="md-comment-input">
+
+            {{ form_errors(form.message) }}
+            {{ form_widget(form.message) }}
+
+        </div>
+
+        <div class="md-comment-send">
+
+            <button class="btn">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+
+        </div>
+
+    </div>
+
+    {{ form_end(form) }}
+
+
+    {% for comment in post.comments %}
+
+        <hr>
+        Автор: {{ comment.author.username }}
+        <br>
+        Комментарий: {{ comment.message }}
+
+    {% endfor %}
 
 {% endblock %}
