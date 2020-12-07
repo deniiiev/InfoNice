@@ -44,12 +44,12 @@ class Category
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $ad;
+    private $ads;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $question;
+    private $questions;
 
     public function __construct()
     {
@@ -134,26 +134,26 @@ class Category
         return $this;
     }
 
-    public function getAd(): ?bool
+    public function getAds(): ?bool
     {
-        return $this->ad;
+        return $this->ads;
     }
 
-    public function setAd(?bool $ad): self
+    public function setAds(?bool $ads): self
     {
-        $this->ad = $ad;
+        $this->ads = $ads;
 
         return $this;
     }
 
-    public function getQuestion(): ?bool
+    public function getQuestions(): ?bool
     {
-        return $this->question;
+        return $this->questions;
     }
 
-    public function setQuestion(?bool $question): self
+    public function setQuestions(?bool $questions): self
     {
-        $this->question = $question;
+        $this->questions = $questions;
 
         return $this;
     }

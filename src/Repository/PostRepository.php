@@ -19,22 +19,39 @@ class PostRepository extends ServiceEntityRepository
         parent::__construct($registry, Post::class);
     }
 
-    // /**
-    //  * @return Post[] Returns an array of Post objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param $criteria
+     * @param string[] $orderBy
+     * @param int $limit
+     * @param int $offset
+     * @return int|mixed|string
+     */
+    public function findPostsBy($criteria,$orderBy = ['publishedAt' => 'DESC'], $limit = 10, $offset = 0)
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $qb = $this->createQueryBuilder('p');
+
+        foreach ($criteria as $property => $value) {
+            if ($property == 'category') {
+                $qb ->join('p.categories', 'c')
+                    ->andWhere('c = :' . $property . '')
+                    ->setParameter($property,$value)
+                ;
+            } else {
+                $qb->andWhere('p.'. $property .' = :' . $property . '')
+                    ->setParameter($property,$value)
+                ;
+            }
+        }
+
+        foreach ($orderBy as $key => $value) {
+            $qb->orderBy('p.'.$key,$value);
+        }
+
+        $qb ->setMaxResults($limit)
+            ->setFirstResult($offset);
+
+        return $qb->getQuery()->getResult();
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Post

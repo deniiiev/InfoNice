@@ -1,3 +1,10 @@
 {% if post.image %}
-    <img class="post-image" width="100%" src="{{ vich_uploader_asset(post) }}" alt="{{ post.title }}">
+
+    {% if back %}
+        <div class="post-image back-picture bp-not-round" style="margin-right: 16px;background-image: url('{{ vich_uploader_asset(post) }}')">
+        </div>
+    {% else %}
+        <img class="post-image" width="100%" src="{{ vich_uploader_asset(post) }}" alt="{{ post.title }}">
+    {% endif %}
+
 {% endif %}

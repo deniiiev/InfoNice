@@ -38,7 +38,7 @@ class DashHomeController extends AbstractController
      */
     public function moderation(PostRepository $repo): Response
     {
-        $posts = $repo->findBy(['published' => false]);
+        $posts = $repo->findBy(['published' => false], ['createdAt' => 'ASC']);
         return $this->render('dashboard/home/moderation.html.twig', [
             'posts' => $posts
         ]);

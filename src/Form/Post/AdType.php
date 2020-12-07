@@ -44,7 +44,7 @@ class AdType extends AbstractType
                 'required' => false,
                 'multiple' => true,
                 'choice_label' => 'title',
-                'choices' => $this->categories->findBy(['ad' => true]),
+                'choices' => $this->categories->findBy(['ads' => true]),
                 'label_attr' => ['class' => 'checkbox-custom'],
                 'attr' => [
                     'data-placeholder' => 'Выберите категории',
@@ -65,13 +65,13 @@ class AdType extends AbstractType
             ->add('priceType', ChoiceType::class, [
                 'choices' => [
                     '-' => null,
-                    'В час' => 'hour',
-                    'В день' => 'day',
-                    'В неделю' => 'week',
-                    'В месяц' => 'month',
-                    'За шт.' => 'piece',
-                    'За кг.' => 'kilogram',
-                    'За л.' => 'liter',
+                    'В час' => 'perhour',
+                    'В день' => 'perday',
+                    'В неделю' => 'perweek',
+                    'В месяц' => 'permonth',
+                    'За шт.' => 'apiece',
+                    'За кг.' => 'perkilogram',
+                    'За л.' => 'perliter',
                 ]
             ])
         ;

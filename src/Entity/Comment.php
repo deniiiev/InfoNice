@@ -40,6 +40,11 @@ class Comment
      */
     private $post;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $anonymous;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -97,6 +102,18 @@ class Comment
     public function setPost(?Post $post): self
     {
         $this->post = $post;
+
+        return $this;
+    }
+
+    public function getAnonymous(): ?bool
+    {
+        return $this->anonymous;
+    }
+
+    public function setAnonymous(?bool $anonymous): self
+    {
+        $this->anonymous = $anonymous;
 
         return $this;
     }

@@ -1,0 +1,6 @@
+{% if post.price %}
+    <div class="post-price">
+        <span class="price">{{ post.price }}€</span>
+        <small class="text-muted">{% if post.priceType %}/ {{ post.priceType | trans({},'posts') }}{% endif %}</small>
+    </div>
+{% endif %}

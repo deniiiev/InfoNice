@@ -1,28 +1,49 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ category.title }}{% endblock %}
-
-{% block top_adv %}
-    <div class="banner container text-center my-3">
-        <img src="{{ asset('assets/images/privet2.jpg') }}" height="100px" alt="privet">
-    </div>
+{% block title %}
+    {{ section | trans({},'posts') }} из категории {{ category.title }}
 {% endblock %}
 
-{% block main %}
+{% block body %}
 
-    {% for post in posts %}
+    <div class="md-box" style="margin-bottom: 12px">
 
-        <div class="md-post">
+        <a class="btn text-muted collapsed" style="width: 100%" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false">
+            {{ (section ~ '.categories') | trans({},'posts') }} <i class="fas fa-chevron-down" style="font-size: 12px"></i>
+        </a>
 
-            {{ postInfo(post) }}
-            {{ postTitle(post) }}
-{#            {{ postCategories(post) }}#}
-            {{ postImage(post) }}
-            {{ postDescription(post) }}
-            {{ postActions(post) }}
+        <div class="collapse" id="navbarToggleExternalContent" style="">
+            <div class="p-2 text-center" style="padding-top: 0 !important;">
 
+                <ul class="disabled-ul">
+
+                    <li class="md-menu-item md-lined-menu active">
+                        <a style="padding-left: 8px" href="{{ path('post_section',{'section':section}) }}">
+                            Все
+                        </a>
+                    </li>
+
+                    {% for category in categories %}
+
+                        <li class="md-menu-item md-lined-menu">
+                            <a style="padding-left: 10px" href="{{ path('post_category', {'section':section, 'slug': category.slug}) }}">
+                                {{ category.title }} ({{ category.posts.count }})
+                            </a>
+                        </li>
+
+                    {% endfor %}
+
+                </ul>
+
+            </div>
         </div>
 
+    </div>
+
+    {% for post in posts %}
+        {{ postView(post) }}
     {% endfor %}
+
+    {{ paginator.display }}
 
 {% endblock %}

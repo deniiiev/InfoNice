@@ -1,18 +1,18 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {{ (type ~ '.adding') | trans({},'posts') }}
+    {{ (section ~ '.adding') | trans({},'posts') }}
 {% endblock %}
 
 {% block body %}
 
     <div class="md-box md-content-padding">
 
-        <h1>{{ (type ~ '.adding') | trans({},'posts') }}</h1>
+        <h1>{{ (section ~ '.adding') | trans({},'posts') }}</h1>
 
         {{ form_start(form) }}
 
-        {% if type == 'ad' %}
+        {% if section == 'ads' %}
 
             {{ form_row(form.imageFile) }}
             {{ form_row(form.title) }}

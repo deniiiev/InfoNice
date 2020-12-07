@@ -32,9 +32,7 @@
                 </div>
 
                 {% block sidebar_b %}
-                    {% if app.user %}
-                        {% include 'layouts/sidemenu.html.twig' %}
-                    {% endif %}
+                    {{ userMenu(true) }}
                 {% endblock %}
 
             </div>

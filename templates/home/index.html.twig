@@ -11,57 +11,9 @@
 {% block body %}
 
     {% for post in posts %}
-
-        {% if post.section == 'ad' %}
-
-            <div class="md-box md-post md-post-ad">
-
-                <div class="post-image back-picture bp-not-round" style="margin-right: 16px;background-image: url('{{ vich_uploader_asset(post) }}')">
-                </div>
-
-                <h4 class="post-title">
-                    <a href="{{ path('post_show', {'id':post.id}) }}">
-                        {{ post.title }}
-                    </a>
-                </h4>
-
-                <small class="text-muted">{{ post.publishedAt ? post.publishedAt | date('Y-m-d H:i:s') : '' }}</small>
-
-                <br>
-
-                <small class="text-muted">
-                    <i class="fas fa-eye"></i>
-                    {{ post.views }}
-                </small>
-
-            </div>
-
-        {% elseif post.section == 'question' %}
-
-            <div class="md-post md-box md-content-padding">
-
-                {{ postInfo(post) }}
-                {{ postTitle(post) }}
-                {{ postDescription(post,100) }}
-                {{ postActions(post) }}
-
-            </div>
-
-        {% elseif post.section == 'news' %}
-
-            <div class="md-post md-box md-content-padding md-post-news">
-
-                {{ postInfo(post) }}
-                {{ postTitle(post) }}
-                {{ postCategories(post) }}
-                {{ postImage(post) }}
-                {{ postDescription(post,180) }}
-                {{ postActions(post) }}
-
-            </div>
-
-        {% endif %}
-
+        {{ postView(post) }}
     {% endfor %}
+
+    {{ paginator.display }}
 
 {% endblock %}

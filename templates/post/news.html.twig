@@ -5,18 +5,9 @@
 {% block body %}
 
     {% for post in posts %}
-
-        <div class="md-post md-box md-content-padding md-post-news">
-
-            {{ postInfo(post) }}
-            {{ postTitle(post) }}
-            {{ postCategories(post) }}
-            {{ postImage(post) }}
-            {{ postDescription(post,180) }}
-            {{ postActions(post) }}
-
-        </div>
-
+        {{ postView(post) }}
     {% endfor %}
+
+    {{ paginator.display }}
 
 {% endblock %}

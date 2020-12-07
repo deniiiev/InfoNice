@@ -6,55 +6,117 @@
 
     <div class="md-box md-content-padding">
 
-        <div class="md-post">
+        <article class="md-post">
 
-            {{ postInfo(post) }}
             {{ postTitle(post,false) }}
+            {{ postInfo(post) }}
             {{ postCategories(post) }}
+            {{ postPrice(post) }}
             {{ postImage(post) }}
             {{ postDescription(post) }}
 
-        </div>
+        </article>
 
-        <a class="featured-toggle{% if post.featured %} added{% endif %}" href="{{ path('post_featured', {'id':post.id}) }}">
-            <i class="fas fa-star"></i>
-        </a>
+        {% if is_granted('ROLE_ADMIN') %}
+
+            <a class="btn btn-secondary float-right" href="">Изменить</a>
+
+            <a class="btn featured-toggle{% if post.featured %} added{% endif %}" href="{{ path('post_featured', {'id':post.id}) }}">
+                <i class="fas fa-star"></i>
+            </a>
+
+        {% endif %}
 
     </div>
 
-    {# TODO: Make form #}
+    {% if app.user %}
 
-    {{ form_start(form) }}
+        {{ form_start(form) }}
 
-    <div class="md-comment-write">
-
-        <div class="md-comment-input">
+        <div class="md-box md-content-padding md-box-margin">
 
             {{ form_errors(form.message) }}
             {{ form_widget(form.message) }}
 
+            <div class="anonymous-comment">
+                {{ form_widget(form.anonymous) }}
+            </div>
+
+            <button class="btn btn-primary float-right mt-2">
+                Отправить
+            </button>
+
         </div>
 
-        <div class="md-comment-send">
+        {{ form_end(form) }}
 
-            <button class="btn">
-                <i class="fas fa-paper-plane"></i>
-            </button>
+    {% else %}
+
+        <div class="md-box md-content-padding md-box-margin">
+            Вам необходимо
+            <a class="font-weight-bold" href="{{ path('app_login') }}">войти</a>
+            или
+            <a class="font-weight-bold" href="{{ path('app_register') }}">зарегистрироваться</a>
+            чтобы оставить комментарий.
+        </div>
+
+    {% endif %}
+
+    <div class="md-box md-content-padding md-box-margin">
+
+        <div class="md-comments">
+
+            <h6 class="mb-3">Комментарии:</h6>
+
+            {% for comment in comments %}
+
+                {% if app.user != post.author and app.user != comment.author and comment.anonymous == true %}
+
+                {% else %}
+
+                    <div class="md-comment">
+
+                        <a class="font-weight-bold" href="{{ path('user_profile',{'username':comment.author.username}) }}">{{ comment.author.username }}</a>
+                        <small class="text-muted">{{ comment.publishedAt ? comment.publishedAt | date('Y-m-d H:i:s') : '' }}</small>
+
+                        {% if app.user == comment.author or is_granted('ROLE_ADMIN') %}
+
+                            <button type="button" class="btn md-dot-btn md-comment-dots" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </button>
+
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a href="{{ path('post_comment_delete',{'id':comment.id}) }}" class="dropdown-item" onclick="return confirm('Уверенны что хотите удалить комментарий?');">
+                                    <i class="fas fa-trash-alt"></i> Удалить
+                                </a>
+                            </div>
+
+                        {% endif %}
+
+                        <span>
+                            {{ comment.message }}
+                        </span>
+
+                        {% if comment.anonymous == true %}
+                            <small class="text-muted">Анонимный комментарий</small>
+                        {% endif %}
+
+                    </div>
+
+                {% endif %}
+
+            {% else %}
+
+                <span class="comments-empty">У этого поста еще нет комментариев, будьте первыми.</span>
+
+            {% endfor %}
 
         </div>
 
     </div>
 
-    {{ form_end(form) }}
-
-
-    {% for comment in post.comments %}
-
-        <hr>
-        Автор: {{ comment.author.username }}
-        <br>
-        Комментарий: {{ comment.message }}
-
-    {% endfor %}
+    <div class="md-box-margin">
+        {{ pagonator.display }}
+    </div>
 
 {% endblock %}

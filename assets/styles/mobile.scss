@@ -25,7 +25,9 @@
 
 @media only screen and (max-width: 768px) {
   h1, .h1 {
-    font-size: 24px;
+    font-size: 26px;
+    top: 0;
+    margin-bottom: 8px;
   }
   .md-post {
     margin-bottom: 12px !important;

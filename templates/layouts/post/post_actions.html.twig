@@ -5,7 +5,7 @@
             <a href="{{ path('post_show',{'id':post.id}) }}">
 {#                <i class="far fa-comment-alt" style="font-size: 22px;"></i>#}
 {#                <span class="count">12</span>#}
-                Посмотреть комментарии ({{ random(35,542) }})
+                Посмотреть комментарии ({{ post.comments.count }})
             </a>
         </span>
     {% endif %}

@@ -101,13 +101,6 @@ main {
   display: none;
 }
 
-.md-nav-avatar {
-  height: 35px;
-  padding: unset;
-  line-height: 38px;
-  margin-top: 1px;
-}
-
 // Side NavBar
 
 #sideNavOpener {
@@ -123,7 +116,6 @@ main {
 }
 
 #sideNav {
-  //box-shadow: 3px 0 8px rgba(0,0,0,0.1);
   box-shadow: 3px 8px 8px rgba(0, 0, 0, 0.1), inset 0 10px 8px -8px rgba(0,0,0,0.1);
   transition: 0.3s !important;
   background-color: #fff;
@@ -187,46 +179,34 @@ main {
 }
 
 .post-categories {
-  margin-bottom: 16px;
-  font-size: 12px;
+  margin: 1px 0 6px;
 }
 
-.post-categories a {
-  border: 1px solid lighten($blue,50%);
-  color: $blue;
-  padding: 6px 8px;
-  border-radius: unset;
-  margin-right: 4px;
-  font-size: 14px;
-  line-height: 15px;
-  font-weight: 400;
-}
-
-.post-categories a:hover {
-  background: #e5f1ff;
-}
-
-.post-info {
-  display: table;
-  width: 100%;
-  margin-bottom: 8px;
-}
-
-.post-info .avatar {
-  margin-right: 6px;
-}
-
-.post-info .username {
-  font-weight: 600;
-}
-
-.post-info .date {
-  font-size: 12px;
-  color: #95a5a6;
+.post-price {
+  margin-bottom: 12px;
 }
 
 .post-image {
-  margin-bottom: 8px;
+  margin-bottom: 12px;
+}
+
+.post-info small {
+  color: #95a5a6;
+  margin-right: 6px;
+}
+
+.post-info small .username {
+  font-weight: unset;
+  color: unset;
+}
+
+.post-info small .username:hover {
+  color: $primary;
+}
+
+.post-price .price {
+  font-weight: 500;
+  color: $primary;
 }
 
 .post-actions {

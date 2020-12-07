@@ -15,15 +15,15 @@
             <ul class="navbar-nav mr-auto">
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('post_news') }}">Новости</a>
+                    <a class="nav-link" href="{{ path('post_section',{'section':'news'}) }}">Новости</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('post_ads') }}">Объявлении</a>
+                    <a class="nav-link" href="{{ path('post_section',{'section':'ads'}) }}">Объявлении</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('post_questions') }}">Вопросы</a>
+                    <a class="nav-link" href="{{ path('post_section',{'section':'questions'}) }}">Вопросы</a>
                 </li>
 
             </ul>
@@ -38,24 +38,11 @@
                             Добавить
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" style="margin-top: 18px">
-                            <a class="dropdown-item" href="{{ path('post_add', {'type':'news'}) }}">Новость</a>
-                            <a class="dropdown-item" href="{{ path('post_add', {'type':'ad'}) }}">Объявление</a>
-                            <a class="dropdown-item" href="{{ path('post_add', {'type':'question'}) }}">Вопрос</a>
+                            <a class="dropdown-item" href="{{ path('post_add', {'section':'news'}) }}">Новость</a>
+                            <a class="dropdown-item" href="{{ path('post_add', {'section':'ads'}) }}">Объявление</a>
+                            <a class="dropdown-item" href="{{ path('post_add', {'section':'questions'}) }}">Вопрос</a>
                         </div>
                     </div>
-
-{#                    <li class="nav-item dropdown float-right">#}
-{#                        <a class="md-nav-avatar nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">#}
-{#                            <div class="back-picture bp-35" style="background-image: url('{% if app.user.avatar %}{{ vich_uploader_asset(app.user) }}{% else %}{{ asset('assets/images/avatar.jpg') }}{% endif %}')"></div>#}
-{#                        </a>#}
-{#                        <div class="dropdown-menu dropdown-menu-right" style="margin-top: 18px">#}
-{#                            <a class="dropdown-item" href="{{ path('user_profile', {'username':app.user.username}) }}">Мой аккаунт</a>#}
-{#                            <a class="dropdown-item" href="{{ path('dash_home_index') }}">Менеджер</a>#}
-{#                            <a class="dropdown-item" href="{{ path('user_settings') }}">Настройки</a>#}
-{#                            <div class="dropdown-divider"></div>#}
-{#                            <a class="dropdown-item text-danger" href="{{ path('app_logout') }}">Выйти</a>#}
-{#                        </div>#}
-{#                    </li>#}
 
                 {% else %}
 
@@ -74,31 +61,14 @@
 
     {% if app.user %}
 
-{#        <a style="position: absolute;right: 14px;" href="{{ path('user_profile', {'username':app.user.username}) }}">#}
-{#            <span class="avatar back-picture bp-35" style="background-image: url('{% if app.user.avatar %}{{ vich_uploader_asset(app.user) }}{% else %}{{ asset('assets/images/avatar.jpg') }}{% endif %}')">#}
-{#            </span>#}
-{#        </a>#}
-
-{#        <div class="dropdown navbar-logout" style="position: absolute;right: 14px;">#}
-{#            <a class="md-nav-avatar nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">#}
-{#                <div class="back-picture bp-35" style="background-image: url('{% if app.user.avatar %}{{ vich_uploader_asset(app.user) }}{% else %}{{ asset('assets/images/avatar.jpg') }}{% endif %}')"></div>#}
-{#            </a>#}
-{#            <div class="dropdown-menu dropdown-menu-right" style="margin-top: 18px">#}
-{#                <a class="dropdown-item" href="{{ path('user_profile', {'username':app.user.username}) }}">Мой аккаунт</a>#}
-{#                <a class="dropdown-item" href="{{ path('user_settings') }}">Настройки</a>#}
-{#                <div class="dropdown-divider"></div>#}
-{#                <a class="dropdown-item text-danger" href="{{ path('app_logout') }}">Выйти</a>#}
-{#            </div>#}
-{#        </div>#}
-
         <div class="nav-item dropdown navbar-logout">
             <a class="btn btn-primary" data-toggle="dropdown" aria-haspopup="true" style="line-height: 24px;width: 40px;height: 40px;">
                 <i class="fas fa-plus-square" style="position: relative; margin-right: 3px; top: 1px;"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-right" style="margin-top: 20px;margin-right: -2px;">
-                <a class="dropdown-item" href="{{ path('post_add', {'type':'news'}) }}">Добавить новость</a>
-                <a class="dropdown-item" href="{{ path('post_add', {'type':'ad'}) }}">Добавить объявление</a>
-                <a class="dropdown-item" href="{{ path('post_add', {'type':'question'}) }}">Добавить вопрос</a>
+                <a class="dropdown-item" href="{{ path('post_add', {'section':'news'}) }}">Добавить новость</a>
+                <a class="dropdown-item" href="{{ path('post_add', {'section':'ads'}) }}">Добавить объявление</a>
+                <a class="dropdown-item" href="{{ path('post_add', {'section':'questions'}) }}">Добавить вопрос</a>
             </div>
         </div>
 
@@ -118,116 +88,5 @@
 </div>
 
 <div id="sideNav">
-
-    <div class="sidenav-links">
-
-{#        {% if app.user %}#}
-
-{#            <a class="sidenav-link" href="{{ path('post_category', {'slug':'news'}) }}">#}
-{#                <div class="back-picture bp-35" style="background-image: url('{% if app.user.avatar %}{{ vich_uploader_asset(app.user) }}{% else %}{{ asset('assets/images/avatar.jpg') }}{% endif %}')"></div>#}
-{#                <span class="dashbar-nav-name">#}
-{#                    Мой профиль#}
-{#                </span>#}
-{#            </a>#}
-
-{#        {% endif %}#}
-
-            <table class="table table-hover">
-                <tbody>
-
-                {% if app.user %}
-
-                <tr style="border-bottom: 1px solid rgba(0,0,0,0.1)">
-                    <td style="width: 0;">
-                        <div class="back-picture bp-35" style="background-image: url('{% if app.user.avatar %}{{ vich_uploader_asset(app.user) }}{% else %}{{ asset('assets/images/avatar.jpg') }}{% endif %}')"></div>
-                    </td>
-                    <td style="padding-left: 0">
-                        <a style="white-space: nowrap" href="{{ path('user_profile', {'username':app.user.username}) }}">Мой профиль</a>
-                    </td>
-                </tr>
-
-                {% endif %}
-
-                <tr>
-                    <td style="width: 0; text-align: center;">
-                        <i class="fas fa-newspaper"></i>
-                    </td>
-                    <td style="padding-left: 0">
-                        <a href="{{ path('dash_home_index') }}">Новости</a>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td style="width: 0; text-align: center;">
-                        <i class="fas fa-clipboard"></i>
-                    </td>
-                    <td style="padding-left: 0">
-                        <a href="{{ path('user_settings') }}">Объявлении</a>
-                    </td>
-                </tr>
-
-                <tr style="border-bottom: 1px solid rgba(0,0,0,0.1)">
-                    <td style="width: 0; text-align: center;">
-                        <i class="fas fa-comments"></i>
-                    </td>
-                    <td style="padding-left: 0">
-                        <a href="{{ path('app_logout') }}">Вопросы</a>
-                    </td>
-                </tr>
-
-                {% if app.user %}
-
-                <tr>
-                    <td style="width: 0; text-align: center;">
-                        <i class="fas fa-toolbox"></i>
-                    </td>
-                    <td style="padding-left: 0">
-                        <a href="{{ path('dash_home_index') }}">Менеджер</a>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td style="width: 0; text-align: center;">
-                        <i class="fas fa-user-cog"></i>
-                    </td>
-                    <td style="padding-left: 0">
-                        <a href="{{ path('user_settings') }}">Настройки</a>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td style="width: 0; text-align: center;">
-                        <i class="fas fa-door-open"></i>
-                    </td>
-                    <td style="padding-left: 0">
-                        <a href="{{ path('app_logout') }}">Выйти</a>
-                    </td>
-                </tr>
-
-                {% endif %}
-
-                </tbody>
-            </table>
-
-{#        <a class="sidenav-link" href="{{ path('post_category', {'slug':'news'}) }}">#}
-{#            <span class="dashbar-nav-name">#}
-{#                Новости#}
-{#            </span>#}
-{#        </a>#}
-
-
-{#        <a class="sidenav-link" href="{{ path('post_category', {'slug':'announcement'}) }}">#}
-{#            <span class="dashbar-nav-name">#}
-{#                Объявлении#}
-{#            </span>#}
-{#        </a>#}
-
-{#        <a class="sidenav-link" href="{{ path('post_category', {'slug':'questions'}) }}">#}
-{#            <span class="dashbar-nav-name">#}
-{#                Вопросы#}
-{#            </span>#}
-{#        </a>#}
-
-    </div>
-
+    {{ userMenu() }}
 </div>

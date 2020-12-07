@@ -1,6 +1,21 @@
+# Titles
 news.adding: 'Добавление новости'
-ad.adding: 'Добавление объявлении'
-question.adding: 'Добавление вопроса'
+ads.adding: 'Добавление объявлении'
+questions.adding: 'Добавление вопроса'
+news.categories: 'Категории новостей'
+ads.categories: 'Категории объявлений'
+questions.categories: 'Категории вопросов'
 news: 'Новости'
+ads: 'Объявлении'
+questions: 'Вопросы'
 ad: 'Объявление'
 question: 'Вопрос'
+
+# Prices
+perhour: 'в час'
+perday: 'в день'
+perweek: 'в неделю'
+permonth: 'в месяц'
+apiece: 'за шт.'
+perkilogram: 'за кг.'
+perliter: 'за л.'

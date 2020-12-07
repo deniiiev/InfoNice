@@ -2,11 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Post;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
-use App\Repository\CategoryRepository;
-use App\Repository\PostRepository;
 use App\Security\UserAuthenticator;
+use App\Service\Paginator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,18 +18,25 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/", name="app_home")
-     * @param PostRepository $postRepository
-     * @param CategoryRepository $categoryRepo
+     * @Route("/{page<\d+>?1}", name="app_home")
+     * @param $page
+     * @param Paginator $paginator
      * @return Response
      */
-    public function home(PostRepository $postRepository, CategoryRepository $categoryRepo): Response
+    public function home($page, Paginator $paginator): Response
     {
-        $categories = $categoryRepo->findAll();
-        $posts = $postRepository->findBy(['published' => true, 'featured' => true],['publishedAt' => 'DESC']);
+        $paginator
+            ->setClass(Post::class)
+            ->setOrder(['publishedAt' => 'DESC'])
+            ->setCriteria(['published' => true, 'featured' => true])
+            ->setType('home')
+            ->setLimit(10)
+            ->setPage($page)
+            ;
+
         return $this->render('home/index.html.twig', [
-            'posts' => $posts,
-            'categories' => $categories
+            'posts' => $paginator->getData(),
+            'paginator' => $paginator
         ]);
     }
 
@@ -98,9 +105,7 @@ class HomeController extends AbstractController
              return $this->redirectToRoute('app_home');
          }
 
-        // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
-        // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('home/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);

@@ -1,0 +1,49 @@
+{% if pages != 0 and pages != 1 %}
+
+    <div>
+
+        <div class="d-flex justify-content-center">
+
+            <ul class="pagination" style="margin: unset">
+
+                <li class="page-item {% if page == 1 %}disabled{% endif %}">
+                    <a class="page-link" href="{{ path( route, parameters | merge({'page': page - 1}) ) }}{% if type == 'comments' %}#comments{% endif %}">
+                        <i class="fas fa-angle-left"></i>
+                    </a>
+                </li>
+
+                {% for i in start..end %}
+                    <li class="page-item {% if page == i %}active{% endif %}">
+                        <a class="page-link" href="{{ path( route, parameters | merge({'page': i}) ) }}{% if type == 'comments' %}#comments{% endif %}">{{ i }}</a>
+                    </li>
+                {% endfor %}
+
+                {% if page < pages - 3 %}
+                    <li class="page-item">
+                <span class="page-link dots">
+                    <span>
+                        ...
+                    </span>
+                </span>
+                    </li>
+                {% endif %}
+
+                {% if page < pages - 2 %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ path( route, parameters | merge({'page': pages}) ) }}{% if type == 'comments' %}#comments{% endif %}">{{ pages }}</a>
+                    </li>
+                {% endif %}
+
+                <li class="page-item {% if page == pages %}disabled{% endif %}">
+                    <a class="page-link" href="{{ path( route, parameters | merge({'page': page + 1}) ) }}{% if type == 'comments' %}#comments{% endif %}">
+                        <i class="fas fa-angle-right"></i>
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+{% endif %}

@@ -1,7 +1,10 @@
 <div class="post-categories">
-    {% for category in post.categories %}
-        <a href="{{ path('post_category', {'slug':category.slug}) }}" class="badge badge-outline-primary">
-            {{ category.title }}
-        </a>
-    {% endfor %}
+    <small class="text-muted">
+        {% for category in post.categories %}
+            <a href="{{ path('post_category', {'section':post.section, 'slug': category.slug}) }}">
+                {{ category.title }}
+            </a>
+            {% if not loop.last %}/{% endif %}
+        {% endfor %}
+    </small>
 </div>

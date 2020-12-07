@@ -1,0 +1,93 @@
+{% if sidebar and app.user or not sidebar %}
+
+    {% if sidebar %}
+
+    <div class="col-3 sidebar-b">
+        <div class="md-box sticky-top">
+
+    {% endif %}
+
+        <nav class="md-usermenu">
+
+            <ul>
+
+                {% if app.user %}
+
+                    <li>
+                        <a href="{{ path('user_profile', {'username':app.user.username}) }}">
+                    <span class="avatar">
+                        <span class="back-picture bp-24" style="background-image: url('{% if app.user.avatar %}{{ vich_uploader_asset(app.user) }}{% else %}{{ asset('assets/images/avatar.jpg') }}{% endif %}')"></span>
+                    </span>
+                            Мой профиль
+                        </a>
+                    </li>
+
+                {% endif %}
+
+                {% if not sidebar %}
+
+                    <li>
+                        <a href="{{ path('post_section',{'section':'news'}) }}">
+                            <span class="icon"><i class="fas fa-newspaper"></i></span>
+                            Новости
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ path('post_section',{'section':'ads'}) }}">
+                            <span class="icon"><i class="fas fa-book"></i></span>
+                            Объявлении
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ path('post_section',{'section':'questions'}) }}">
+                            <span class="icon"><i class="fas fa-question-circle"></i></span>
+                            Вопросы
+                        </a>
+                    </li>
+
+                {% endif %}
+
+
+                {% if app.user %}
+
+                    {% if is_granted('ROLE_ADMIN') %}
+
+                        <li>
+                            <a href="{{ path('dash_home_index') }}">
+                                <span class="icon"><i class="fas fa-toolbox"></i></span>
+                                Менеджер
+                            </a>
+                        </li>
+
+                    {% endif %}
+
+                    <li>
+                        <a href="{{ path('user_settings') }}">
+                            <span class="icon"><i class="fas fa-user-cog"></i></span>
+                            Настройки
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ path('app_logout') }}">
+                            <span class="icon"><i class="fas fa-door-open"></i></span>
+                            Выйти
+                        </a>
+                    </li>
+
+                {% endif %}
+
+            </ul>
+
+        </nav>
+
+    {% if sidebar %}
+
+        </div>
+    </div>
+
+    {% endif %}
+
+{% endif %}

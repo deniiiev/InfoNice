@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Comment;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,11 +19,16 @@ class CommentType extends AbstractType
                 'attr' => [
                     'class' => 'md-autosizer',
                     'placeholder' => 'Написать комментарий',
-                    'rows' => 1
+                    'rows' => 2
                 ],
                 'constraints' => [
                     new NotBlank()
                 ]
+            ])
+            ->add('anonymous', CheckboxType::class, [
+                'label' => 'Анонимно',
+                'required' => false,
+                'label_attr' => ['class' => 'switch-custom']
             ])
         ;
     }

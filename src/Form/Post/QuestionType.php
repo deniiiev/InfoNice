@@ -42,7 +42,7 @@ class QuestionType extends AbstractType
                 'required' => false,
                 'multiple' => true,
                 'choice_label' => 'title',
-                'choices' => $this->categories->findBy(['question' => true]),
+                'choices' => $this->categories->findBy(['questions' => true]),
                 'label_attr' => ['class' => 'checkbox-custom'],
                 'attr' => [
                     'data-placeholder' => 'Выберите категории',

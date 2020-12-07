@@ -16,14 +16,17 @@ class PostExtension extends AbstractExtension
             new TwigFunction('postCategories', [$this, 'postCategories'], ['is_safe' => ['html'], 'needs_environment' => true]),
             new TwigFunction('postImage', [$this, 'postImage'], ['is_safe' => ['html'], 'needs_environment' => true]),
             new TwigFunction('postDescription', [$this, 'postDescription'], ['is_safe' => ['html'], 'needs_environment' => true]),
+            new TwigFunction('postPrice', [$this, 'postPrice'], ['is_safe' => ['html'], 'needs_environment' => true]),
             new TwigFunction('postActions', [$this, 'postActions'], ['is_safe' => ['html'], 'needs_environment' => true]),
+            new TwigFunction('postView', [$this, 'postView'], ['is_safe' => ['html'], 'needs_environment' => true]),
         ];
     }
 
-    public function postInfo(Environment $twig, $post)
+    public function postInfo(Environment $twig, $post, $type = 'full')
     {
         return $twig->render('layouts/post/post_info.html.twig', [
-            'post' => $post
+            'post' => $post,
+            'type' => $type
         ]);
     }
 
@@ -42,10 +45,11 @@ class PostExtension extends AbstractExtension
         ]);
     }
 
-    public function postImage(Environment $twig, $post)
+    public function postImage(Environment $twig, $post, $back = false)
     {
         return $twig->render('layouts/post/post_image.html.twig', [
-            'post' => $post
+            'post' => $post,
+            'back' => $back
         ]);
     }
 
@@ -57,11 +61,25 @@ class PostExtension extends AbstractExtension
         ]);
     }
 
+    public function postPrice(Environment $twig, $post)
+    {
+        return $twig->render('layouts/post/post_price.html.twig', [
+            'post' => $post
+        ]);
+    }
+
     public function postActions(Environment $twig, $post, $comments = true)
     {
         return $twig->render('layouts/post/post_actions.html.twig', [
             'post' => $post,
             'comments' => $comments
+        ]);
+    }
+
+    public function postView(Environment $twig,$post)
+    {
+        return $twig->render('layouts/post/post_view.html.twig',[
+            'post' => $post
         ]);
     }
 }

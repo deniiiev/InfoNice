@@ -1,13 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Объявлении{% endblock %}
+{% block title %}
+    {{ section | trans({},'posts') }}
+{% endblock %}
 
 {% block body %}
 
     <div class="md-box" style="margin-bottom: 12px">
 
         <a class="btn text-muted collapsed" style="width: 100%" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false">
-            Категории объявлений <i class="fas fa-chevron-down" style="font-size: 12px"></i>
+            {{ (section ~ '.categories') | trans({},'posts') }} <i class="fas fa-chevron-down" style="font-size: 12px"></i>
         </a>
 
         <div class="collapse" id="navbarToggleExternalContent" style="">
@@ -16,7 +18,7 @@
                 <ul class="disabled-ul">
 
                     <li class="md-menu-item md-lined-menu active">
-                        <a style="padding-left: 8px" href="{{ path('post_ads') }}">
+                        <a style="padding-left: 8px" href="{{ path('post_section',{'section':section}) }}">
                             Все
                         </a>
                     </li>
@@ -24,7 +26,7 @@
                     {% for category in categories %}
 
                         <li class="md-menu-item md-lined-menu">
-                            <a style="padding-left: 10px" href="#">
+                            <a style="padding-left: 10px" href="{{ path('post_category', {'section':section, 'slug': category.slug}) }}">
                                 {{ category.title }} ({{ category.posts.count }})
                             </a>
                         </li>

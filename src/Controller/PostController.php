@@ -10,8 +10,11 @@ use App\Form\CommentType;
 use App\Form\Post\AdType;
 use App\Form\Post\NewsType;
 use App\Form\Post\QuestionType;
+use App\Repository\CategoryRepository;
+use App\Repository\CommentRepository;
 use App\Repository\PostRepository;
 use App\Repository\UserRepository;
+use App\Service\Paginator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,59 +24,97 @@ use Symfony\Component\Routing\Annotation\Route;
 class PostController extends AbstractController
 {
     /**
-     * @Route("/news", name="post_news")
-     * @param PostRepository $postRepo
+     * @Route("/section/{section}/{page<\d+>?1}", name="post_section")
+     * @param $section
+     * @param $page
+     * @param CategoryRepository $categoryRepo
+     * @param Paginator $paginator
      * @return string
      */
-    public function news(PostRepository $postRepo)
+    public function section($section,$page, CategoryRepository $categoryRepo, Paginator $paginator)
     {
-        $posts = $postRepo->findBy(['section'=>'news','published' => true], ['publishedAt' => 'DESC']);
+        $categories = $categoryRepo->findBy([$section => true]);
 
-        return $this->render('post/news.html.twig', [
-            'posts' => $posts
+        $paginator
+            ->setClass(Post::class)
+            ->setOrder(['publishedAt' => 'DESC'])
+            ->setCriteria(['section'=>$section,'published' => true])
+            ->setParameters(['section'=>$section])
+            ->setLimit(10)
+            ->setPage($page)
+        ;
+
+        return $this->render('post/section.html.twig', [
+            'posts' => $paginator->getData(),
+            'paginator' => $paginator,
+            'categories' => $categories,
+            'section' => $section
         ]);
     }
 
     /**
-     * @Route("/ads", name="post_ads")
-     * @param PostRepository $postRepo
+     * @Route("/section/{section}/{slug}/{page<\d+>?1}", name="post_category")
+     * @param $section
+     * @param Category $category
+     * @param $page
+     * @param Paginator $paginator
+     * @param CategoryRepository $categoryRepo
      * @return string
      */
-    public function ads(PostRepository $postRepo)
+    public function category($section, Category $category, $page, Paginator $paginator, CategoryRepository $categoryRepo)
     {
-        $posts = $postRepo->findBy(['section'=>'ad', 'published' => true], ['publishedAt' => 'DESC']);
+        $categories = $categoryRepo->findBy([$section => true]);
 
-        return $this->render('post/ads.html.twig', [
-            'posts' => $posts
+        $paginator
+            ->setClass(Post::class)
+            ->setOrder(['publishedAt' => 'DESC'])
+            ->setCriteria(['section'=>$section,'published' => true,'category' => $category])
+            ->setType('post')
+            ->setParameters(['section'=>$section,'slug'=>$category->getSlug()])
+            ->setLimit(10)
+            ->setPage($page)
+        ;
+
+        $parameters = [
+            'section' => 'news',
+            'slug' => 'dokumenty'
+        ];
+
+        return $this->render('post/category.html.twig',[
+            'posts' => $paginator->getData(),
+            'paginator' => $paginator,
+            'categories' => $categories,
+            'section' => $section,
+            'category' => $category,
+            'parameters' => $parameters
         ]);
     }
 
     /**
-     * @Route("/questions", name="post_questions")
-     * @param PostRepository $postRepo
-     * @return string
-     */
-    public function questions(PostRepository $postRepo)
-    {
-        $posts = $postRepo->findBy(['section'=>'question', 'published' => true], ['publishedAt' => 'DESC']);
-
-        return $this->render('post/questions.html.twig', [
-            'posts' => $posts
-        ]);
-    }
-
-    /**
-     * @Route("/post/{id}", name="post_show")
+     * @Route("/post/{id}/{page<\d+>?1}", name="post_show")
      * @param Post $post
+     * @param $page
+     * @param Paginator $paginator
      * @param Request $request
-     * @param UserRepository $repo
+     * @param UserRepository $userRepo
+     * @param CommentRepository $commentRepo
      * @return Response
      */
-    public function show(Post $post, Request $request, UserRepository $repo): Response
+    public function show(Post $post, $page, Paginator $paginator, Request $request, UserRepository $userRepo, CommentRepository $commentRepo): Response
     {
         if ($post->getPublished() != true && $this->getUser() != $post->getAuthor() && !$this->isGranted('ROLE_ADMIN')) {
             throw $this->createNotFoundException();
         }
+
+        $paginator
+            ->setClass(Comment::class)
+            ->setOrder(['publishedAt' => 'DESC'])
+            ->setCriteria(['post' => $post])
+            ->setLimit(10)
+            ->setType('comments')
+            ->setParameters(['id'=>$post->getId()])
+            ->setPage($page)
+        ;
 
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(CommentType::class);
@@ -81,10 +122,16 @@ class PostController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $comment = new Comment();
-            $comment->setAuthor($repo->findOneBy(['username' => $this->getUser()->getUsername()]));
+            $comment->setAuthor($userRepo->findOneBy(['username' => $this->getUser()->getUsername()]));
             $comment->setMessage($form->get('message')->getData());
+            $comment->setAnonymous($form->get('anonymous')->getData());
             $comment->setPost($post);
             $em->persist($comment);
+            $em->flush();
+
+            return $this->redirectToRoute('post_show',[
+                'id' => $post->getId()
+            ]);
         }
 
         $post->setViews($post->getViews()+1);
@@ -93,40 +140,29 @@ class PostController extends AbstractController
 
         return $this->render('post/show.html.twig', [
             'post' => $post,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'comments' => $paginator->getData(),
+            'pagonator' => $paginator
         ]);
     }
 
     /**
-     * @Route("/posts/{slug}", name="post_category")
-     * @param Category $category
-     * @return Response
-     */
-    public function category(Category $category): Response
-    {
-        return $this->render('post/category.html.twig', [
-            'posts' => $category->getPosts(),
-            'category' => $category
-        ]);
-    }
-
-    /**
-     * @Route("/add/{type}", name="post_add", methods={"GET","POST"})
-     * @param $type
+     * @Route("/add/{section}", name="post_add", methods={"GET","POST"})
+     * @param $section
      * @param Request $request
      * @return Response
      */
-    public function add($type,Request $request): Response
+    public function add($section,Request $request): Response
     {
-        $types = ['news' => NewsType::class, 'ad' => AdType::class, 'question' => QuestionType::class];
+        $sections = ['news' => NewsType::class, 'ads' => AdType::class, 'questions' => QuestionType::class];
 
         $post = new Post();
-        $form = $this->createForm($types[$type], $post);
+        $form = $this->createForm($sections[$section], $post);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $post->setAuthor($this->getDoctrine()->getRepository(User::class)->findOneBy(['username'=>$this->getUser()->getUsername()]));
-            $post->setSection($type);
+            $post->setSection($section);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($post);
@@ -138,7 +174,7 @@ class PostController extends AbstractController
         return $this->render('post/add.html.twig', [
             'post' => $post,
             'form' => $form->createView(),
-            'type' => $type
+            'section' => $section
         ]);
     }
 
@@ -162,6 +198,24 @@ class PostController extends AbstractController
 
         return $this->json([
             'response' => $response
+        ]);
+    }
+
+    /**
+     * @Route("/post/comment/delete/{id}", name="post_comment_delete")
+     * @param Comment $comment
+     * @return Response
+     */
+    public function delete(Comment $comment): Response
+    {
+        if ($this->getUser() == $comment->getAuthor() || $this->isGranted('ROLE_ADMIN')) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($comment);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('post_show',[
+            'id' => $comment->getPost()->getId()
         ]);
     }
 }
