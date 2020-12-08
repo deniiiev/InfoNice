@@ -19,6 +19,37 @@ class PostRepository extends ServiceEntityRepository
         parent::__construct($registry, Post::class);
     }
 
+    public function findUserBookmarks($criteria, $orderBy = ['id' => 'DESC'], $limit = 10, $offset = 0)
+    {
+        $qb = $this->createQueryBuilder('p');
+
+        $qb
+            ->join('p.bookmarks', 'b')
+            ->join('b.user', 'u')
+        ;
+
+        foreach ($criteria as $property => $value) {
+            if ($property == 'user') {
+                $qb ->andWhere('u = :' . $property . '')
+                    ->setParameter($property,$value)
+                ;
+            } else {
+                $qb->andWhere('p.'. $property .' = :' . $property . '')
+                    ->setParameter($property,$value)
+                ;
+            }
+        }
+
+        foreach ($orderBy as $key => $value) {
+            $qb->orderBy('b.'.$key,$value);
+        }
+
+        $qb ->setMaxResults($limit)
+            ->setFirstResult($offset);
+
+        return $qb->getQuery()->getResult();
+    }
+
     /**
      * @param $criteria
      * @param string[] $orderBy

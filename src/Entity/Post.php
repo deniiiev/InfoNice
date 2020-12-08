@@ -119,10 +119,16 @@ class Post
      */
     private $comments;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Bookmark::class, mappedBy="post", orphanRemoval=true)
+     */
+    private $bookmarks;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->bookmarks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -136,7 +142,7 @@ class Post
     public function initializePrePersist()
     {
         $this->views = 0;
-        $this->published = false;
+        $this->published = null;
         $this->featured = false;
         $this->createdAt = new DateTime('now');
     }
@@ -396,6 +402,36 @@ class Post
             // set the owning side to null (unless already changed)
             if ($comment->getPost() === $this) {
                 $comment->setPost(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Bookmark[]
+     */
+    public function getBookmarks(): Collection
+    {
+        return $this->bookmarks;
+    }
+
+    public function addBookmark(Bookmark $bookmark): self
+    {
+        if (!$this->bookmarks->contains($bookmark)) {
+            $this->bookmarks[] = $bookmark;
+            $bookmark->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBookmark(Bookmark $bookmark): self
+    {
+        if ($this->bookmarks->removeElement($bookmark)) {
+            // set the owning side to null (unless already changed)
+            if ($bookmark->getPost() === $this) {
+                $bookmark->setPost(null);
             }
         }
 

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Bookmark;
 use App\Entity\Category;
 use App\Entity\Comment;
 use App\Entity\Post;
@@ -20,6 +21,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PostController extends AbstractController
 {
@@ -130,7 +132,8 @@ class PostController extends AbstractController
             $em->flush();
 
             return $this->redirectToRoute('post_show',[
-                'id' => $post->getId()
+                'id' => $post->getId(),
+                '_fragment' => 'comments'
             ]);
         }
 
@@ -175,6 +178,36 @@ class PostController extends AbstractController
             'post' => $post,
             'form' => $form->createView(),
             'section' => $section
+        ]);
+    }
+
+    /**
+     * @Route("/bookmarker/{slug}", name="post_bookmarker", methods={"POST", "GET"})
+     * @param Post $post
+     * @param UserRepository $users
+     * @return JsonResponse
+     */
+    public function bookmarker(Post $post, UserRepository $users): Response
+    {
+        $user = $users->findOneBy(['username' => $this->getUser()->getUsername()]);
+        $contains = $this->getDoctrine()->getRepository(Bookmark::class)->findOneBy(['user' => $user, 'post' => $post]);
+        $em = $this->getDoctrine()->getManager();
+
+        if ($contains) {
+            $user->removeBookmark($contains);
+            $response = ['status' => 'removed'];
+        } else {
+            $bookmark = new Bookmark();
+            $bookmark->setUser($user);
+            $bookmark->setPost($post);
+            $em->persist($bookmark);
+            $response = ['status' => 'added'];
+        }
+
+        $em->flush();
+
+        return $this->json([
+            'response' => $response
         ]);
     }
 

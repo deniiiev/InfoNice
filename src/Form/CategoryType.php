@@ -23,13 +23,13 @@ class CategoryType extends AbstractType
                 'required' => false,
                 'label_attr' => ['class' => 'checkbox-custom']
             ])
-            ->add('ad',CheckboxType::class,[
+            ->add('ads',CheckboxType::class,[
                 'label'=>'ads',
                 'translation_domain' => 'forms',
                 'required' => false,
                 'label_attr' => ['class' => 'checkbox-custom']
             ])
-            ->add('question',CheckboxType::class,[
+            ->add('questions',CheckboxType::class,[
                 'label'=>'questions',
                 'translation_domain' => 'forms',
                 'required' => false,

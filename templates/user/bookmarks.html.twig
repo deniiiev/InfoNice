@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'bookmarks' | trans }}{% endblock %}
+
+{% block main_top %}
+    <ol class="md-box md-breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('user_profile', {'username': app.user.username} ) }}">{{ app.user.username }}</a></li>
+        <li class="breadcrumb-item active">{{ 'bookmarks' | trans }}</li>
+    </ol>
+{% endblock %}
+
+{% block body %}
+
+    {% for post in posts %}
+
+        {{ postView(post) }}
+
+    {% else %}
+
+        <div class="md-box md-content-padding">
+            <span class="empty-entries">У вас пока нет закладок.</span>
+        </div>
+
+    {% endfor %}
+
+    {{ paginator.display() }}
+
+{% endblock %}

@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Post;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\PostRepository;
 use App\Repository\UserRepository;
+use App\Service\Paginator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,6 +33,33 @@ class UserController extends AbstractController
         return $this->render('user/profile.html.twig', [
             'user' => $user,
             'posts' => $posts
+        ]);
+    }
+
+    /**
+     * @Route("/bookmarks/{page<\d+>?1}", name="user_bookmarks")
+     * @param $page
+     * @param Paginator $paginator
+     * @param PostRepository $postRepo
+     * @return Response
+     */
+    public function bookmarks($page, Paginator $paginator, PostRepository $postRepo): Response
+    {
+        $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['username' => $this->getUser()->getUsername()]);
+
+        $paginator
+            ->setClass(Post::class)
+            ->setType('post')
+            ->setOrder(['addedAt' => 'DESC'])
+            ->setType('bookmark')
+            ->setCriteria(['user' => $user,'published' => true])
+            ->setLimit(10)
+            ->setPage($page)
+        ;
+
+        return $this->render('user/bookmarks.html.twig', [
+            'posts' => $paginator->getData(),
+            'paginator' => $paginator
         ]);
     }
 

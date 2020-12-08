@@ -3,8 +3,10 @@
 namespace App\Controller\Dashboard;
 
 use App\Entity\Post;
-use App\Form\PostType;
-use App\Repository\PostRepository;
+use App\Form\Post\AdType;
+use App\Form\Post\NewsType;
+use App\Form\Post\QuestionType;
+use App\Service\Paginator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,14 +18,23 @@ use Symfony\Component\Routing\Annotation\Route;
 class DashPostController extends AbstractController
 {
     /**
-     * @Route("/", name="post_index", methods={"GET"})
-     * @param PostRepository $postRepository
+     * @Route("/{page<\d+>?1}", name="post_index", methods={"GET"})
+     * @param $page
+     * @param Paginator $paginator
      * @return Response
      */
-    public function index(PostRepository $postRepository): Response
+    public function index($page, Paginator $paginator): Response
     {
+        $paginator
+            ->setClass(Post::class)
+            ->setOrder(['createdAt' => 'DESC'])
+            ->setLimit(10)
+            ->setPage($page)
+        ;
+
         return $this->render('dashboard/post/index.html.twig', [
-            'posts' => $postRepository->findBy([],['createdAt' => 'DESC']),
+            'posts' => $paginator->getData(),
+            'paginator' => $paginator
         ]);
     }
 
@@ -35,12 +46,13 @@ class DashPostController extends AbstractController
      */
     public function edit(Request $request, Post $post): Response
     {
-        $form = $this->createForm(PostType::class, $post);
+        $sections = ['news' => NewsType::class, 'ads' => AdType::class, 'questions' => QuestionType::class];
+
+        $form = $this->createForm($sections[$post->getSection()], $post);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
-
             return $this->redirectToRoute('dash_post_index');
         }
 

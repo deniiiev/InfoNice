@@ -1,10 +1,53 @@
 {% extends 'dashboard/base.html.twig' %}
 
 {% block title %}
+    Менеджер управления
 {% endblock %}
 
 {% block body %}
 
-    <div class="md-box"></div>
+    <div class="container dash-crud-header">
+
+        <h1>Менеджер</h1>
+
+    </div>
+
+    <div class="md-box">
+
+        <table class="table table-hover">
+
+            <tbody>
+
+            {% for info,count in informations %}
+
+                    <tr>
+
+                        <td>
+                            {{ info | trans({}, 'information') }}
+                        </td>
+
+                        <td style="text-align: center">
+
+                            {% if info == 'in_moderation' %}
+
+                                <a class="badge badge-pill badge-danger" href="{{ path('dash_moderation') }}">{{ count }}</a>
+
+                            {% else %}
+
+                                {{ count }}
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
 
 {% endblock %}

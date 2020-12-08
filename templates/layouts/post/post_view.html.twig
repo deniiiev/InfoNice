@@ -1,12 +1,18 @@
 {% if post.section == 'ads' %}
 
-    <div class="md-box md-post md-post-ad">
+    <div class="md-post md-box md-post-ad">
 
-        {{ postImage(post,true) }}
-        {{ postTitle(post) }}
-        {{ postInfo(post,'low') }}
-        {{ postCategories(post) }}
-        {{ postPrice(post) }}
+        <div class="md-ad-image back-picture bp-not-round" style="margin-right: 16px;background-image: url('{{ vich_uploader_asset(post) }}')">
+        </div>
+
+        <div style="padding-top: 12px">
+            {{ postTitle(post) }}
+            {{ postInfo(post,'medium') }}
+            {{ postCategories(post) }}
+            {{ postPrice(post) }}
+        </div>
+
+        {{ postActions(post,false) }}
 
     </div>
 

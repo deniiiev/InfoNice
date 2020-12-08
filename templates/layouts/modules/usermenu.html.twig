@@ -52,6 +52,13 @@
 
                 {% if app.user %}
 
+                    <li>
+                        <a href="{{ path('user_bookmarks') }}">
+                            <span class="icon"><i class="fas fa-bookmark"></i></span>
+                            Закладки
+                        </a>
+                    </li>
+
                     {% if is_granted('ROLE_ADMIN') %}
 
                         <li>
@@ -65,7 +72,7 @@
 
                     <li>
                         <a href="{{ path('user_settings') }}">
-                            <span class="icon"><i class="fas fa-user-cog"></i></span>
+                            <span class="icon"><i class="fas fa-cog"></i></span>
                             Настройки
                         </a>
                     </li>

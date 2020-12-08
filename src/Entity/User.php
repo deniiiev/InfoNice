@@ -76,10 +76,16 @@ class User implements UserInterface, \Serializable
      */
     private $comments;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Bookmark::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $bookmarks;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->bookmarks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -289,6 +295,36 @@ class User implements UserInterface, \Serializable
             // set the owning side to null (unless already changed)
             if ($comment->getAuthor() === $this) {
                 $comment->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Bookmark[]
+     */
+    public function getBookmarks(): Collection
+    {
+        return $this->bookmarks;
+    }
+
+    public function addBookmark(Bookmark $bookmark): self
+    {
+        if (!$this->bookmarks->contains($bookmark)) {
+            $this->bookmarks[] = $bookmark;
+            $bookmark->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBookmark(Bookmark $bookmark): self
+    {
+        if ($this->bookmarks->removeElement($bookmark)) {
+            // set the owning side to null (unless already changed)
+            if ($bookmark->getUser() === $this) {
+                $bookmark->setUser(null);
             }
         }
 

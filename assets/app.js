@@ -20,6 +20,13 @@ require('@fortawesome/fontawesome-free/js/all.js');
 // Bootstrap js
 require('bootstrap');
 
+// Enable tooltip
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip({
+        trigger : 'hover'
+    })
+});
+
 // Prevent scroll
 let keys = {37: 1, 38: 1, 39: 1, 40: 1};
 
@@ -89,6 +96,7 @@ if (sideNav) {
 const axios = require('axios').default;
 
 let featured = document.querySelectorAll('.featured-toggle');
+let bookmarker = document.querySelectorAll('.bookmark-toggle');
 
 function switcher(event) {
     event.preventDefault();
@@ -102,4 +110,8 @@ function switcher(event) {
 
 featured.forEach((featured) => {
     featured.addEventListener('click', switcher);
+});
+
+bookmarker.forEach((bookmarker) => {
+    bookmarker.addEventListener('click', switcher);
 });

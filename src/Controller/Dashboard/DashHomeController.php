@@ -5,6 +5,7 @@ namespace App\Controller\Dashboard;
 use App\Entity\Post;
 use App\Repository\CategoryRepository;
 use App\Repository\PostRepository;
+use App\Repository\UserRepository;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,13 +22,19 @@ class DashHomeController extends AbstractController
      * @param CategoryRepository $categoryRepo
      * @return Response
      */
-    public function index(PostRepository $postRepository, CategoryRepository $categoryRepo): Response
+    public function index(PostRepository $postRepository, CategoryRepository $categoryRepo, UserRepository $userRepo): Response
     {
-        $categories = $categoryRepo->findAll();
-        $posts = $postRepository->findBy([],['publishedAt' => 'DESC']);
+        $informations = [
+            'in_moderation' => $postRepository->count(['published' => null]),
+            'news' => $postRepository->count(['section' => 'news']),
+            'ads' =>  $postRepository->count(['section' => 'ads']),
+            'questions' => $postRepository->count(['section' => 'questions']),
+            'users' => $userRepo->count([]),
+            'categories' => $categoryRepo->count([]),
+        ];
+
         return $this->render('dashboard/home/index.html.twig', [
-            'posts' => $posts,
-            'categories' => $categories
+            'informations' => $informations
         ]);
     }
 
@@ -38,7 +45,7 @@ class DashHomeController extends AbstractController
      */
     public function moderation(PostRepository $repo): Response
     {
-        $posts = $repo->findBy(['published' => false], ['createdAt' => 'ASC']);
+        $posts = $repo->findBy(['published' => null], ['createdAt' => 'ASC']);
         return $this->render('dashboard/home/moderation.html.twig', [
             'posts' => $posts
         ]);
@@ -71,5 +78,19 @@ class DashHomeController extends AbstractController
         return $this->redirectToRoute('dash_moderation_publish', [
             'id' => $post->getId()
         ]);
+    }
+
+    /**
+     * @Route("/moderation/cancel/{id}", name="moderation_cancel")
+     * @param Post $post
+     * @return Response
+     */
+    public function cancel(Post $post):Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $post->setPublished(false);
+        $post->setPublishedAt(new DateTime('now'));
+        $em->flush();
+        return $this->redirectToRoute('dash_moderation');
     }
 }

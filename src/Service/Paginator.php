@@ -73,6 +73,8 @@ class Paginator
 
         if ($this->type == 'post') {
             $data = $repo->findPostsBy($this->criteria,$this->order,$this->limit, $offset);
+        } elseif ($this->type == 'bookmark') {
+            $data = $repo->findUserBookmarks($this->criteria,$this->order, $this->limit, $offset);
         } else {
             $data = $repo->findBy($this->criteria,$this->order,$this->limit, $offset);
         }
@@ -86,6 +88,8 @@ class Paginator
 
         if ($this->type == 'post') {
             $total = count($repo->findPostsBy($this->criteria));
+        } elseif ($this->type == 'bookmark') {
+            $total = count($repo->findUserBookmarks($this->criteria));
         } else {
             $total = count($repo->findBy($this->criteria));
         }

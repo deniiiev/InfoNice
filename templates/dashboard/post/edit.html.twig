@@ -1,12 +1,12 @@
 {% extends 'dashboard/base.html.twig' %}
 
-{% block title %}Редактирование поста{% endblock %}
+{% block title %}{{ (post.section ~ '.editing') | trans({},'posts') }}{% endblock %}
 
 {% block body %}
 
     <div class="md-box md-content-padding">
 
-        <h1>Редактирование поста</h1>
+        <h1>{{ (post.section ~ '.editing') | trans({},'posts') }}</h1>
 
         {{ form_start(form) }}
 
@@ -24,4 +24,5 @@
 
 {% block scripts %}
     {{ chosen() }}
+    {{ ckeditor() }}
 {% endblock %}

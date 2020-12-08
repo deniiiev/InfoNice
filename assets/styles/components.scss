@@ -63,6 +63,16 @@ body {
   padding: unset;
 }
 
+.empty-entries {
+  background-color: rgba(0,0,0,0.05);
+  padding: 10px;
+  border-radius: 3px;
+  border: 1px solid rgba(0,0,0,0.1);
+  display: block;
+  text-align: center;
+  color: #888;
+}
+
 // Sidemenu
 
 .md-usermenu ul {
@@ -149,16 +159,6 @@ body {
   margin-top: 15px;
 }
 
-.comments-empty {
-  background-color: rgba(0,0,0,0.05);
-  padding: 10px;
-  border-radius: 3px;
-  border: 1px solid rgba(0,0,0,0.1);
-  display: block;
-  text-align: center;
-  color: #888;
-}
-
 .md-comment-dots {
   position: absolute;
   right: 0;
@@ -204,6 +204,7 @@ body {
   padding-left: 14px;
   font-size: 30px;
   font-weight: 500;
+  top: -1px;
 }
 .dash-crud-header .btn {
   margin: 8px !important;
@@ -289,4 +290,23 @@ tr:hover .md-dot-btn {
 }
 .featured-toggle.added {
   color: orange;
+}
+
+// Bookmark toggle
+
+.bookmark-toggle .bookmark-icon::before {
+  content: "\f02e";
+  font-family: "Font Awesome 5 Free", sans-serif;
+  font-size: 22px;
+  position: relative;
+  font-weight: 400;
+  -moz-osx-font-smoothing: grayscale;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  line-height: 1;
+}
+
+.bookmark-toggle.added .bookmark-icon::before {
+  font-weight: 800;
 }

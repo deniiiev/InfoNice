@@ -45,4 +45,15 @@
   .col-sm {
     padding: 0 12px;
   }
+  .md-post-ad .post-actions {
+    bottom: 16px !important;
+    right: 16px !important;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .md-ad-image {
+    width: 140px !important;
+    height: 160px !important;
+  }
 }

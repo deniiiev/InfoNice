@@ -8,7 +8,9 @@
 
         <h1>Категории</h1>
 
-        <a class="btn btn-primary float-right" href="{{ path('dash_category_new') }}">Добавить категорию</a>
+        <a class="btn btn-primary float-right" href="{{ path('dash_category_new') }}">
+            <i class="fas fa-plus-square"></i>
+        </a>
 
     </div>
 
@@ -44,6 +46,10 @@
 
         </div>
 
+    </div>
+
+    <div class="my-4">
+        {{ paginator.display }}
     </div>
 
 {% endblock %}

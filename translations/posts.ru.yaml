@@ -1,17 +1,17 @@
-# Titles
 news.adding: 'Добавление новости'
 ads.adding: 'Добавление объявлении'
 questions.adding: 'Добавление вопроса'
+news.editing: 'Изменение новости'
+ads.editing: 'Изменение объявлении'
+questions.editing: 'Изменение вопроса'
 news.categories: 'Категории новостей'
 ads.categories: 'Категории объявлений'
 questions.categories: 'Категории вопросов'
-news: 'Новости'
-ads: 'Объявлении'
-questions: 'Вопросы'
-ad: 'Объявление'
-question: 'Вопрос'
-
-# Prices
+news: Новости
+ads: Объявлении
+questions: Вопросы
+ad: Объявление
+question: Вопрос
 perhour: 'в час'
 perday: 'в день'
 perweek: 'в неделю'

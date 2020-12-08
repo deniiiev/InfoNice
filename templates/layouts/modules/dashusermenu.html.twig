@@ -1,0 +1,51 @@
+{% if sidebar and app.user or not sidebar %}
+
+    {% if sidebar %}
+
+        <div class="col-3 sidebar-b">
+        <div class="md-box sticky-top">
+
+    {% endif %}
+
+    <nav class="md-usermenu">
+
+        <ul>
+
+            {% if not sidebar %}
+
+                <li>
+                    <a href="{{ path('dash_post_index') }}">
+                        <span class="icon"><i class="fas fa-copy"></i></span>
+                        Посты
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ path('dash_category_index') }}">
+                        <span class="icon"><i class="fas fa-clone"></i></span>
+                        Категории
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ path('dash_moderation') }}">
+                        <span class="icon"><i class="fas fa-user-edit"></i></span>
+                        Модерация
+                        <span class="badge badge-pill badge-danger">{{ in_moderation }}</span>
+                    </a>
+                </li>
+
+            {% endif %}
+
+        </ul>
+
+    </nav>
+
+    {% if sidebar %}
+
+        </div>
+        </div>
+
+    {% endif %}
+
+{% endif %}
