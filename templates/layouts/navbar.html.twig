@@ -2,6 +2,9 @@
 
     <a id="sideNavOpener" class="text-dark" href="javascript:void(0)">
         <i class="fas fa-bars"></i>
+        {% if notifyCount(app.user) %}
+            <span class="notifier"></span>
+        {% endif %}
     </a>
 
     <div class="container">

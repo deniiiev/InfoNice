@@ -22,9 +22,27 @@
                         </a>
                     </li>
 
+                    <li>
+                        <a href="{{ path('user_notifications') }}">
+                            <span class="icon"><i class="fas fa-bell"></i></span>
+                            Уведомлении {{ notifyCountBadge(app.user) }}
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ path('user_bookmarks') }}">
+                            <span class="icon"><i class="fas fa-bookmark"></i></span>
+                            Закладки
+                        </a>
+                    </li>
+
                 {% endif %}
 
                 {% if not sidebar %}
+
+                    {% if app.user %}
+                        <hr class="m-1">
+                    {% endif %}
 
                     <li>
                         <a href="{{ path('post_section',{'section':'news'}) }}">
@@ -52,37 +70,36 @@
 
                 {% if app.user %}
 
-                    <li>
-                        <a href="{{ path('user_bookmarks') }}">
-                            <span class="icon"><i class="fas fa-bookmark"></i></span>
-                            Закладки
-                        </a>
-                    </li>
+                    <div class="md-muted-usermenu">
 
-                    {% if is_granted('ROLE_ADMIN') %}
+                        <hr class="m-1">
+
+                        {% if is_granted('ROLE_ADMIN') %}
+
+                            <li>
+                                <a href="{{ path('dash_home_index') }}">
+                                    <span class="icon"><i class="fas fa-toolbox"></i></span>
+                                    Менеджер
+                                </a>
+                            </li>
+
+                        {% endif %}
 
                         <li>
-                            <a href="{{ path('dash_home_index') }}">
-                                <span class="icon"><i class="fas fa-toolbox"></i></span>
-                                Менеджер
+                            <a href="{{ path('user_settings') }}">
+                                <span class="icon"><i class="fas fa-cog"></i></span>
+                                Настройки
                             </a>
                         </li>
 
-                    {% endif %}
+                        <li>
+                            <a href="{{ path('app_logout') }}">
+                                <span class="icon"><i class="fas fa-door-open"></i></span>
+                                Выйти
+                            </a>
+                        </li>
 
-                    <li>
-                        <a href="{{ path('user_settings') }}">
-                            <span class="icon"><i class="fas fa-cog"></i></span>
-                            Настройки
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="{{ path('app_logout') }}">
-                            <span class="icon"><i class="fas fa-door-open"></i></span>
-                            Выйти
-                        </a>
-                    </li>
+                    </div>
 
                 {% endif %}
 

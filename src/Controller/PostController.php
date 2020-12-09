@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Bookmark;
 use App\Entity\Category;
 use App\Entity\Comment;
+use App\Entity\Notification;
 use App\Entity\Post;
 use App\Entity\User;
 use App\Form\CommentType;
@@ -12,8 +13,6 @@ use App\Form\Post\AdType;
 use App\Form\Post\NewsType;
 use App\Form\Post\QuestionType;
 use App\Repository\CategoryRepository;
-use App\Repository\CommentRepository;
-use App\Repository\PostRepository;
 use App\Repository\UserRepository;
 use App\Service\Paginator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,7 +20,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PostController extends AbstractController
 {
@@ -42,6 +40,7 @@ class PostController extends AbstractController
             ->setOrder(['publishedAt' => 'DESC'])
             ->setCriteria(['section'=>$section,'published' => true])
             ->setParameters(['section'=>$section])
+            ->setMethod('findPostsBy')
             ->setLimit(10)
             ->setPage($page)
         ;
@@ -71,7 +70,7 @@ class PostController extends AbstractController
             ->setClass(Post::class)
             ->setOrder(['publishedAt' => 'DESC'])
             ->setCriteria(['section'=>$section,'published' => true,'category' => $category])
-            ->setType('post')
+            ->setMethod('findPostsBy')
             ->setParameters(['section'=>$section,'slug'=>$category->getSlug()])
             ->setLimit(10)
             ->setPage($page)
@@ -99,10 +98,9 @@ class PostController extends AbstractController
      * @param Paginator $paginator
      * @param Request $request
      * @param UserRepository $userRepo
-     * @param CommentRepository $commentRepo
      * @return Response
      */
-    public function show(Post $post, $page, Paginator $paginator, Request $request, UserRepository $userRepo, CommentRepository $commentRepo): Response
+    public function show(Post $post, $page, Paginator $paginator, Request $request, UserRepository $userRepo): Response
     {
         if ($post->getPublished() != true && $this->getUser() != $post->getAuthor() && !$this->isGranted('ROLE_ADMIN')) {
             throw $this->createNotFoundException();
@@ -113,7 +111,6 @@ class PostController extends AbstractController
             ->setOrder(['publishedAt' => 'DESC'])
             ->setCriteria(['post' => $post])
             ->setLimit(10)
-            ->setType('comments')
             ->setParameters(['id'=>$post->getId()])
             ->setPage($page)
         ;
@@ -128,6 +125,25 @@ class PostController extends AbstractController
             $comment->setMessage($form->get('message')->getData());
             $comment->setAnonymous($form->get('anonymous')->getData());
             $comment->setPost($post);
+
+            if ($form->get('replyTo')->getData()) {
+                $receiver = $userRepo->findOneBy(['username' => $form->get('replyTo')->getData()]);
+                $notification = new Notification();
+                $notification->setReceiver($receiver);
+                $notification->setComment($comment);
+                $notification->setType('reply');
+                $comment->setReplyTo($receiver);
+                $em->persist($notification);
+            }
+
+            if ($post->getAuthor() != $this->getUser() && !$form->get('replyTo')->getData()) {
+                $notification = new Notification();
+                $notification->setReceiver($post->getAuthor());
+                $notification->setComment($comment);
+                $notification->setType('post');
+                $em->persist($notification);
+            }
+
             $em->persist($comment);
             $em->flush();
 

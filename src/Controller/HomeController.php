@@ -29,7 +29,7 @@ class HomeController extends AbstractController
             ->setClass(Post::class)
             ->setOrder(['publishedAt' => 'DESC'])
             ->setCriteria(['published' => true, 'featured' => true])
-            ->setType('home')
+            ->setMethod('findPostsBy')
             ->setLimit(10)
             ->setPage($page)
             ;

@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Notification;
 use App\Entity\Post;
 use App\Entity\User;
 use App\Form\UserType;
+use App\Repository\NotificationRepository;
 use App\Repository\PostRepository;
 use App\Repository\UserRepository;
 use App\Service\Paginator;
@@ -37,6 +39,39 @@ class UserController extends AbstractController
     }
 
     /**
+     * @Route("/notifications/{page<\d+>?1}", name="user_notifications")
+     * @param $page
+     * @param NotificationRepository $notifyRepo
+     * @param UserRepository $userRepo
+     * @param Paginator $paginator
+     * @return Response
+     */
+    public function notifications($page, NotificationRepository $notifyRepo, UserRepository $userRepo, Paginator $paginator)
+    {
+        $user = $userRepo->findOneBy(['username' => $this->getUser()->getUsername()]);
+
+        if ($notifyRepo->count(['receiver' => $user, 'seen' => false])) {
+            foreach ($notifyRepo->findBy(['receiver' => $user,'seen' => false]) as $notification) {
+                $notification->setSeen(true);
+            }
+            $this->getDoctrine()->getManager()->flush();
+        }
+
+        $paginator
+            ->setClass(Notification::class)
+            ->setCriteria($user)
+            ->setOrder(['createdAt' => 'DESC'])
+            ->setMethod('findUserNotifications')
+            ->setLimit(10)
+            ->setPage($page);
+
+        return $this->render('user/notifications.html.twig', [
+            'notifications' => $paginator->getData(),
+            'paginator' => $paginator
+        ]);
+    }
+
+    /**
      * @Route("/bookmarks/{page<\d+>?1}", name="user_bookmarks")
      * @param $page
      * @param Paginator $paginator
@@ -49,10 +84,9 @@ class UserController extends AbstractController
 
         $paginator
             ->setClass(Post::class)
-            ->setType('post')
             ->setOrder(['addedAt' => 'DESC'])
-            ->setType('bookmark')
             ->setCriteria(['user' => $user,'published' => true])
+            ->setMethod('findUserBookmarks')
             ->setLimit(10)
             ->setPage($page)
         ;

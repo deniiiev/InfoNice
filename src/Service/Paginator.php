@@ -17,7 +17,7 @@ class Paginator
     private $criteria = [];
     private $parameters = [null=>null];
     private $order = ['id' => 'ASC'];
-    private $type = 'crud';
+    private $method = 'findBy';
 
     public function __construct(EntityManagerInterface $manager, Environment $twig, RequestStack $request)
     {
@@ -36,8 +36,26 @@ class Paginator
             'parameters' => $this->parameters,
             'start' => $this->getStart(),
             'end' => $this->getEnd(),
-            'type' => $this->type
+            'type' => strtolower((new \ReflectionClass($this->class))->getShortName())
         ]);
+    }
+
+    public function getData()
+    {
+        $offset = $this->page * $this->limit - $this->limit;
+        $repo = $this->manager->getRepository($this->class);
+        $method = $this->method;
+
+        return $repo->$method($this->criteria,$this->order,$this->limit, $offset);
+    }
+
+    public function getPages()
+    {
+        $repo = $this->manager->getRepository($this->class);
+        $method = $this->method;
+        $total = count($repo->$method($this->criteria));
+
+        return ceil($total / $this->limit);
     }
 
     public function getStart()
@@ -66,40 +84,9 @@ class Paginator
         return $end;
     }
 
-    public function getData()
+    public function setMethod($method)
     {
-        $offset = $this->page * $this->limit - $this->limit;
-        $repo = $this->manager->getRepository($this->class);
-
-        if ($this->type == 'post') {
-            $data = $repo->findPostsBy($this->criteria,$this->order,$this->limit, $offset);
-        } elseif ($this->type == 'bookmark') {
-            $data = $repo->findUserBookmarks($this->criteria,$this->order, $this->limit, $offset);
-        } else {
-            $data = $repo->findBy($this->criteria,$this->order,$this->limit, $offset);
-        }
-
-        return $data;
-    }
-
-    public function getPages()
-    {
-        $repo = $this->manager->getRepository($this->class);
-
-        if ($this->type == 'post') {
-            $total = count($repo->findPostsBy($this->criteria));
-        } elseif ($this->type == 'bookmark') {
-            $total = count($repo->findUserBookmarks($this->criteria));
-        } else {
-            $total = count($repo->findBy($this->criteria));
-        }
-
-        return ceil($total / $this->limit);
-    }
-
-    public function setType($type)
-    {
-        $this->type = $type;
+        $this->method = $method;
         return $this;
     }
 

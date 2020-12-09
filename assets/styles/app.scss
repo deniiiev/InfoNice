@@ -152,6 +152,17 @@ main {
   text-align: center;
 }
 
+#sideNavOpener .notifier {
+  background: #e74c3c;
+  height: 8px;
+  width: 8px;
+  display: block;
+  border-radius: 100px;
+  position: absolute;
+  right: 16px;
+  top: 38px;
+}
+
 // Post
 
 .md-post {

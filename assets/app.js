@@ -115,3 +115,34 @@ featured.forEach((featured) => {
 bookmarker.forEach((bookmarker) => {
     bookmarker.addEventListener('click', switcher);
 });
+
+// Comment reply
+
+const commentWrite = document.querySelector('.md-comment-write');
+const commentTextArea = document.getElementById('comment_message');
+const commentReply = document.querySelectorAll('.comment-reply');
+const replyTo = document.getElementById('comment_replyTo');
+const commentReplyUser = document.querySelector('.md-comment-reply-user');
+const replyingDelete = document.querySelector('.md-replying-delete');
+
+if (replyingDelete) {
+    replyingDelete.addEventListener('click', () => {
+        replyTo.removeAttribute('value');
+        commentWrite.classList.remove('md-replying');
+    });
+}
+
+if (commentReply) {
+    commentReply.forEach((reply) => {
+        let replyUser = reply.querySelector('.reply-user');
+        reply.addEventListener('click', (reply) => {
+            replyTo.value = replyUser.innerHTML;
+            commentTextArea.focus();
+
+            if (replyTo.value !== '') {
+                commentWrite.classList.add('md-replying');
+                commentReplyUser.innerHTML = replyTo.value;
+            }
+        })
+    });
+}

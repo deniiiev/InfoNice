@@ -34,20 +34,33 @@
 
         {{ form_start(form) }}
 
-        <div class="md-box md-content-padding md-box-margin">
+            <div class="md-comment-write">
 
-            {{ form_errors(form.message) }}
-            {{ form_widget(form.message) }}
+                <div class="md-box md-content-padding md-box-margin">
 
-            <div class="anonymous-comment">
-                {{ form_widget(form.anonymous) }}
+                    <div class="md-comment-input">
+
+                        <small class="md-comment-reply-area">
+                            <span class="float-left mr-1">Ответ для</span>
+                            <span class="md-comment-reply-user font-weight-bold"></span>
+                            <span class="md-replying-delete"><i class="fas fa-times"></i></span>
+                        </small>
+                        {{ form_errors(form.message) }}
+                        {{ form_widget(form.message) }}
+
+                    </div>
+
+                    <div class="anonymous-comment">
+                        {{ form_widget(form.anonymous) }}
+                    </div>
+
+                    <button class="btn btn-primary float-right mt-2">
+                        Отправить
+                    </button>
+
+                </div>
+
             </div>
-
-            <button class="btn btn-primary float-right mt-2">
-                Отправить
-            </button>
-
-        </div>
 
         {{ form_end(form) }}
 
@@ -80,7 +93,6 @@
                     <div class="md-comment">
 
                         <a class="font-weight-bold" href="{{ path('user_profile',{'username':comment.author.username}) }}">{{ comment.author.username }}</a>
-                        <small class="text-muted">{{ comment.publishedAt ? comment.publishedAt | date('Y-m-d H:i:s') : '' }}</small>
 
                         {% if app.user == comment.author or is_granted('ROLE_ADMIN') %}
 
@@ -96,9 +108,28 @@
 
                         {% endif %}
 
-                        <span>
+                        <span class="md-comment-message">
+
+                            {% if comment.replyTo %}
+                                <a class="badge badge-light md-comment-username font-weight-bold" style="top: -1px;position: relative;line-height: 8px" href="{{ path('user_profile', {username: comment.replyTo.username}) }}">
+                                    {{ comment.replyTo.username }}
+                                </a>
+                            {% endif %}
+
                             {{ comment.message }}
+
                         </span>
+
+                        <small class="text-muted float-left mr-2">{{ comment.publishedAt ? comment.publishedAt | date('Y-m-d H:i:s') : '' }}</small>
+
+                        {% if app.user and comment.author.username != app.user.username %}
+                            <small class="md-comment-reply text-muted">
+                                <span class="comment-reply">
+                                    <span class="reply-user d-none">{{ comment.author.username }}</span>
+                                        Ответить
+                                </span>
+                            </small>
+                        {% endif %}
 
                         {% if comment.anonymous == true %}
                             <small class="text-muted">Анонимный комментарий</small>

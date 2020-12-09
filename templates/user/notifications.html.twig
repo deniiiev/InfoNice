@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Уведомлении{% endblock %}
+
+{% block body %}
+
+    <div class="md-box md-content-padding">
+
+        <h5>Уведомлении</h5>
+
+        {% for notification in notifications %}
+
+            <div class="md-notification mb-3 mt-3">
+
+                <a class="font-weight-bold" href="{{ path('user_profile',{'username': notification.comment.author.username }) }}">
+                    {{ notification.comment.author.username }}
+                </a>
+
+                {{ (notification.type ~ '_notify_start') | trans({},'information') }}
+
+                "{{ notification.comment.message }}"
+
+                {{ (notification.type ~ '_notify_end') | trans({},'information') }}
+
+
+                <a class="font-weight-bold" href="{{ path('post_show',{'id': notification.comment.post.id }) }}">
+                    {{ notification.comment.post.title }}
+                </a>
+
+            </div>
+
+        {% else %}
+
+            <span class="empty-entries">У вас пока нет уведомлений.</span>
+
+        {% endfor %}
+
+    </div>
+
+{% endblock %}
