@@ -41,3 +41,8 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
          - { path: ^/dash, roles: ROLE_ADMIN }
+
+         - { path: ^/notifications, roles: ROLE_USER }
+         - { path: ^/bookmarks, roles: ROLE_USER }
+         - { path: ^/settings, roles: ROLE_USER }
+         - { path: ^/add, roles: ROLE_USER }

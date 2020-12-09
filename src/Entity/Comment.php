@@ -57,6 +57,11 @@ class Comment
      */
     private $replyTo;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $complaints;
+
     public function __construct()
     {
         $this->notifications = new ArrayCollection();
@@ -73,6 +78,7 @@ class Comment
     public function initializePrePersist()
     {
         $this->publishedAt = new DateTime('now');
+        $this->complaints = 0;
     }
 
     public function getMessage(): ?string
@@ -173,6 +179,18 @@ class Comment
     public function setReplyTo(?User $replyTo): self
     {
         $this->replyTo = $replyTo;
+
+        return $this;
+    }
+
+    public function getComplaints(): ?int
+    {
+        return $this->complaints;
+    }
+
+    public function setComplaints(int $complaints): self
+    {
+        $this->complaints = $complaints;
 
         return $this;
     }

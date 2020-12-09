@@ -251,6 +251,21 @@ class PostController extends AbstractController
     }
 
     /**
+     * @Route("/post/comment/complaint/{id}", name="post_comment_complaint")
+     * @param Comment $comment
+     * @return Response
+     */
+    public function complaint(Comment $comment): Response
+    {
+        $comment->setComplaints($comment->getComplaints()+1);
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->redirectToRoute('post_show',[
+            'id' => $comment->getPost()->getId()
+        ]);
+    }
+
+    /**
      * @Route("/post/comment/delete/{id}", name="post_comment_delete")
      * @param Comment $comment
      * @return Response

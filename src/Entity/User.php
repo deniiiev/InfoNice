@@ -91,6 +91,11 @@ class User implements UserInterface, \Serializable
      */
     private $replies;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $bannedUntil;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -399,6 +404,18 @@ class User implements UserInterface, \Serializable
                 $reply->setReplyTo(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getBannedUntil(): ?\DateTimeInterface
+    {
+        return $this->bannedUntil;
+    }
+
+    public function setBannedUntil(?\DateTimeInterface $bannedUntil): self
+    {
+        $this->bannedUntil = $bannedUntil;
 
         return $this;
     }

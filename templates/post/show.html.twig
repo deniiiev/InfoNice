@@ -30,7 +30,7 @@
 
     </div>
 
-    {% if app.user %}
+    {% if app.user and app.user.bannedUntil < date() %}
 
         {{ form_start(form) }}
 
@@ -66,13 +66,26 @@
 
     {% else %}
 
-        <div class="md-box md-content-padding md-box-margin">
-            Вам необходимо
-            <a class="font-weight-bold" href="{{ path('app_login') }}">войти</a>
-            или
-            <a class="font-weight-bold" href="{{ path('app_register') }}">зарегистрироваться</a>
-            чтобы оставить комментарий.
-        </div>
+        {% if app.user and app.user.bannedUntil > date() %}
+
+            <div class="md-box md-content-padding md-box-margin text-center">
+                Вы забанены до
+                {{ app.user.bannedUntil ? app.user.bannedUntil | date('d/m/Y') : '' }}
+                ({{ app.user.bannedUntil ? app.user.bannedUntil | date('H:i') : '' }})
+                , поэтому вам запрещено писать комментарии.
+            </div>
+
+        {% else %}
+
+            <div class="md-box md-content-padding md-box-margin">
+                Вам необходимо
+                <a class="font-weight-bold" href="{{ path('app_login') }}">войти</a>
+                или
+                <a class="font-weight-bold" href="{{ path('app_register') }}">зарегистрироваться</a>
+                чтобы оставить комментарий.
+            </div>
+
+        {% endif %}
 
     {% endif %}
 
@@ -94,16 +107,25 @@
 
                         <a class="font-weight-bold" href="{{ path('user_profile',{'username':comment.author.username}) }}">{{ comment.author.username }}</a>
 
-                        {% if app.user == comment.author or is_granted('ROLE_ADMIN') %}
+                        {% if app.user %}
 
                             <button type="button" class="btn md-dot-btn md-comment-dots" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-ellipsis-h"></i>
                             </button>
 
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a href="{{ path('post_comment_delete',{'id':comment.id}) }}" class="dropdown-item" onclick="return confirm('Уверенны что хотите удалить комментарий?');">
-                                    <i class="fas fa-trash-alt"></i> Удалить
-                                </a>
+
+                                {% if app.user != comment.author or is_granted('ROLE_ADMIN') %}
+                                    <a href="{{ path('post_comment_complaint',{'id':comment.id}) }}" class="dropdown-item" onclick="return confirm('Вы уверенны что хотите пожаловаться на комментарий?');">
+                                        <i class="fas fa-exclamation-triangle"></i> Пожаловаться
+                                    </a>
+                                {% endif %}
+
+                                {% if app.user == comment.author or is_granted('ROLE_ADMIN') %}
+                                    <a href="{{ path('post_comment_delete',{'id':comment.id}) }}" class="dropdown-item" onclick="return confirm('Уверенны что хотите удалить комментарий?');">
+                                        <i class="fas fa-trash-alt"></i> Удалить
+                                    </a>
+                                {% endif %}
                             </div>
 
                         {% endif %}
