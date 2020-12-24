@@ -1,10 +1,12 @@
-news: 'Новости'
-ads: 'Объявлении'
-questions: 'Вопросы'
-users: 'Пользователи'
-categories: 'Категории'
-in_moderation: 'На модерации'
+news: Новости
+ads: Объявлении
+questions: Вопросы
+users: Пользователи
+categories: Категории
 reply_notify_start: 'ответил(а) на ваш комментарий:'
 reply_notify_end: 'в публикации'
 post_notify_start: 'оставила(а) комментарий:'
 post_notify_end: 'на вашу публикацию'
+in_moderation: 'На модерации'
+post_moderation: 'Посты на модерации'
+comment_moderation: 'Комментарии на модерации'

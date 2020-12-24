@@ -21,8 +21,6 @@
                         <th>ID</th>
                         <th><i class="fas fa-image"></i></th>
                         <th>Заголовок</th>
-                        <th>Статус</th>
-                        <th>Создано</th>
                     </tr>
                 </thead>
 
@@ -35,10 +33,10 @@
                             </td>
                             <td>
                                 <a href="{{ path('post_show', {'id':post.id}) }}" target="_blank">{{ post.title }}</a>
+                                <br>
+                                <small class="text-muted">{{ post.createdAt ? post.createdAt|date('Y-m-d H:i:s') : '' }}</small>
                                 {{ crudActions(post, 'post') }}
                             </td>
-                            <td>{{ postStatus(post.published) }}</td>
-                            <td>{{ post.createdAt ? post.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                         </tr>
                     {% else %}
                         <tr>

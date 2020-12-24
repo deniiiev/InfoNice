@@ -16,31 +16,69 @@
 
         <table class="table table-hover">
 
+            <thead class="thead-dark">
+                <tr>
+                    <th colspan="2">Модерация</th>
+                </tr>
+            </thead>
+
             <tbody>
 
-            {% for info,count in informations %}
+            {% for section,info in moderation %}
 
-                    <tr>
+                <tr>
 
-                        <td>
-                            {{ info | trans({}, 'information') }}
-                        </td>
+                    <td>
+                        <a href="{{ path(info.path) }}">{{ section | trans({}, 'information') }}</a>
+                    </td>
 
-                        <td style="text-align: center">
+                    <td style="text-align: center">
 
-                            {% if info == 'in_moderation' %}
+                        {% if info.count > 0 %}
+                            <a class="badge badge-pill badge-danger" href="{{ path(info.path) }}">{{ info.count }}</a>
+                        {% else %}
+                            -
+                        {% endif %}
 
-                                <a class="badge badge-pill badge-danger" href="{{ path('dash_moderation') }}">{{ count }}</a>
+                    </td>
 
-                            {% else %}
+                </tr>
 
-                                {{ count }}
+            {% endfor %}
 
-                            {% endif %}
+            </tbody>
 
-                        </td>
+        </table>
 
-                    </tr>
+    </div>
+
+    <div class="md-box md-box-margin">
+
+        <table class="table table-hover">
+
+            <thead class="thead-dark">
+                <tr>
+                    <th colspan="2">Статистика</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+            {% for section,count in informations %}
+
+                <tr>
+
+                    <td>
+                        {{ section | trans({}, 'information') }}
+                    </td>
+
+                    <td style="text-align: center">
+
+                        {{ count }}
+
+                    </td>
+
+                </tr>
 
             {% endfor %}
 

@@ -1,0 +1,57 @@
+{% extends 'dashboard/base.html.twig' %}
+
+{% block title %}Пользователи{% endblock %}
+
+{% block body %}
+
+    <div class="container dash-crud-header">
+
+        <h1>Пользователи</h1>
+
+        <a class="btn btn-primary float-right" href="{{ path('dash_user_new') }}">
+            <i class="fas fa-plus-square"></i>
+        </a>
+
+    </div>
+
+    <div class="md-box md-content-padding">
+
+        <div class="scrollable-table">
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Avatar</th>
+                        <th>Username</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+
+                    <tr>
+                        <td>{{ user.id }}</td>
+
+                        <td>
+                            <div class="back-picture bp-50" style="background-image: url('{{ vich_uploader_asset(user) }}')"></div>
+                        </td>
+
+                        <td>
+                            {{ user.username }}
+                            {{ crudActions(user, 'user') }}
+                        </td>
+                    </tr>
+
+                {% else %}
+                    <tr>
+                        <td colspan="9">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+{% endblock %}

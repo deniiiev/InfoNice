@@ -19,6 +19,24 @@ class CommentRepository extends ServiceEntityRepository
         parent::__construct($registry, Comment::class);
     }
 
+    public function complaintsMoreThan($quantity, $orderBy = ['id' => 'DESC'], $limit = 10, $offset = 0)
+    {
+        $qb = $this->createQueryBuilder('c');
+
+        $qb ->where('c.complaints > :quantity')
+            ->setParameter('quantity',$quantity)
+        ;
+
+        foreach ($orderBy as $key => $value) {
+            $qb->orderBy('c.'.$key,$value);
+        }
+
+        $qb ->setMaxResults($limit)
+            ->setFirstResult($offset);
+
+        return $qb->getQuery()->getResult();
+    }
+
     // /**
     //  * @return Comment[] Returns an array of Comment objects
     //  */

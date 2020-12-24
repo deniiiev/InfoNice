@@ -1,7 +1,10 @@
-<nav class="md-navbar navbar navbar-expand-lg navbar-light bg-white sticky-top">
+<nav class="md-navbar md-dash-navbar navbar navbar-expand-lg navbar-light bg-white sticky-top">
 
     <a id="sideNavOpener" class="text-dark" href="javascript:void(0)">
         <i class="fas fa-bars"></i>
+        {% if moderationCount() %}
+            <span class="notifier"></span>
+        {% endif %}
     </a>
 
     <div class="container">
@@ -20,6 +23,14 @@
 
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('dash_category_index') }}">Категории</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('dash_moderation_posts') }}">Мод. постов</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('dash_moderation_comments') }}">Мод. комментов</a>
                 </li>
 
             </ul>
@@ -46,6 +57,6 @@
     <div id="sideNavBack"></div>
 </div>
 
-<div id="sideNav">
+<div id="sideNav" class="md-dash-sidenav">
     {{ dashUserMenu() }}
 </div>

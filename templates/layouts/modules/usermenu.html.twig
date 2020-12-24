@@ -16,7 +16,7 @@
                     <li>
                         <a href="{{ path('user_profile', {'username':app.user.username}) }}">
                     <span class="avatar">
-                        <span class="back-picture bp-24" style="background-image: url('{% if app.user.avatar %}{{ vich_uploader_asset(app.user) }}{% else %}{{ asset('assets/images/avatar.jpg') }}{% endif %}')"></span>
+                        <span class="back-picture bp-24" style="background-image: url('{% if app.user.profile.avatar %}{{ vich_uploader_asset(app.user.profile) }}{% else %}{{ asset('assets/images/avatar.jpg') }}{% endif %}')"></span>
                     </span>
                             Мой профиль
                         </a>

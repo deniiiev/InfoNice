@@ -1,0 +1,21 @@
+{% extends 'dashboard/base.html.twig' %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block body %}
+
+    {% for comment in comments %}
+
+        <div class="md-box md-content-padding md-box-margin">
+            {{ comment.message }}
+        </div>
+
+    {% endfor %}
+
+    <div class="my-3">
+        {{ paginator.display }}
+    </div>
+
+{% endblock %}

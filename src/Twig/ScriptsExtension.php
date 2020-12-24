@@ -32,9 +32,13 @@ class ScriptsExtension extends AbstractExtension
         return $twig->render('layouts/plugins/ckeditor.html.twig');
     }
 
-    public function postStatus(Environment $twig, $status)
+    public function postStatus(Environment $twig, $status, $text = true)
     {
-        $template = '<span class="badge badge-%s">%s</span>';
+        if ($text) {
+            $template = '<span class="badge badge-%s">%s</span>';
+        } else {
+            $template = '<span class="badge badge-%s"> </span>';
+        }
 
         if ($status === null) {
             $info = ['color' => 'warning', 'message' => 'на модерации'];

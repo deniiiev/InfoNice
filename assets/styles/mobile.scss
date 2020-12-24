@@ -21,6 +21,9 @@
   .sidebar-b {
     display: none;
   }
+  .table .md-dot-btn {
+    display: unset !important;
+  }
 }
 
 @media only screen and (max-width: 768px) {

@@ -8,15 +8,15 @@
 
         {{ form_start(form) }}
 
-            {{ form_widget(form) }}
+        {{ form_widget(form) }}
 
-            <button class="btn btn-primary">
-                Сохранить
-            </button>
+        <button class="btn btn-primary">
+            Сохранить
+        </button>
 
-            <a class="btn btn-link float-right" href="{{ path('user_profile', {'username':user.username}) }}">
-                Отмена
-            </a>
+        <a class="btn btn-link float-right" href="{{ path('user_profile', {'username':user.username}) }}">
+            Отмена
+        </a>
 
         {{ form_end(form) }}
 

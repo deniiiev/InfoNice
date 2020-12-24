@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Notification;
 use App\Entity\Post;
 use App\Entity\User;
+use App\Form\ProfileType;
 use App\Form\UserType;
 use App\Repository\NotificationRepository;
 use App\Repository\PostRepository;
@@ -14,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Vich\UploaderBundle\Handler\UploadHandler;
 
 
 class UserController extends AbstractController
@@ -98,7 +100,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route ("/settings", name="user_settings", methods={"GET","POST"})
+     * @Route ("/settings", name="user_settings")
      * @param Request $request
      * @param UserRepository $repo
      * @return Response
@@ -106,7 +108,7 @@ class UserController extends AbstractController
     public function settings(Request $request, UserRepository $repo): Response
     {
         $user = $repo->findOneBy(['username'=>$this->getUser()->getUsername()]);
-        $form = $this->createForm(UserType::class,$user);
+        $form = $this->createForm(ProfileType::class,$user->getProfile());
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -118,6 +120,35 @@ class UserController extends AbstractController
         }
 
         return $this->render('user/settings.html.twig', [
+            'user' => $user,
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/edit", name="edit")
+     * @param Request $request
+     * @param UserRepository $repo
+     * @param UploadHandler $handler
+     * @return Response
+     */
+    public function edit(Request $request, UserRepository $repo, UploadHandler $handler)
+    {
+        $user = $repo->findOneBy(['username' => $this->getUser()->getUsername()]);
+        $form = $this->createForm(ProfileType::class, $user->getProfile());
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->get('avatarDelete')->getData() == true) {
+                $handler->remove($user->getProfile(),'avatarFile');
+                $user->getProfile()->setAvatar('avatar.jpg');
+            }
+            $this->getDoctrine()->getManager()->flush();
+            $this->addFlash('success', $this->trans('profile.changes.saved'));
+            return $this->redirectToRoute('user_profile', ['username' => $user->getUsername()]);
+        }
+
+        return $this->render('user/edit.html.twig', [
             'user' => $user,
             'form' => $form->createView()
         ]);

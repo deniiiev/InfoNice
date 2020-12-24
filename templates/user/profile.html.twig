@@ -7,13 +7,13 @@
     <div class="md-box md-content-padding">
 
         <div class="md-profile-block">
-            <div class="back-picture bp-130" style="margin-right: 16px;background-image: url('{% if user.avatar %}{{ vich_uploader_asset(user) }}{% else %}{{ asset('assets/images/avatar.jpg') }}{% endif %}')">
+            <div class="back-picture bp-130" style="margin-right: 16px;background-image: url('{% if user.profile.avatar %}{{ vich_uploader_asset(user.profile) }}{% else %}{{ asset('assets/images/avatar.jpg') }}{% endif %}')">
             </div>
 
             <h3>{{ user.username }}</h3>
 
             <div>
-                {{ user.about | raw }}
+                {{ user.profile.about | raw }}
             </div>
         </div>
 

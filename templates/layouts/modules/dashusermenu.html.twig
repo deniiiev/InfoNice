@@ -27,11 +27,27 @@
                     </a>
                 </li>
 
+                <div class="text-muted mx-3 my-1">Модерация</div>
+
+                <hr class="m-1">
+
                 <li>
-                    <a href="{{ path('dash_moderation') }}">
-                        <span class="icon"><i class="fas fa-user-edit"></i></span>
-                        Модерация
-                        <span class="badge badge-pill badge-danger">{{ in_moderation }}</span>
+                    <a href="{{ path('dash_moderation_posts') }}">
+                        <span class="icon"><i class="fas fa-th-list"></i></span>
+                        Посты
+                        {% if post_moderation > 0 %}
+                            <span class="badge badge-pill badge-danger">{{ post_moderation }}</span>
+                        {% endif %}
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ path('dash_moderation_comments') }}">
+                        <span class="icon"><i class="fas fa-tasks"></i></span>
+                        Комментарии
+                        {% if comment_moderation > 0 %}
+                            <span class="badge badge-pill badge-danger">{{ comment_moderation }}</span>
+                        {% endif %}
                     </a>
                 </li>
 
